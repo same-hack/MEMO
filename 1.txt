@@ -1,0 +1,140 @@
+TomTom Traffic API 概要（整理版）
+1. 企業概要
+
+TomTom は、**オランダ（アムステルダム）**を本拠とする多国籍企業
+
+ナビゲーション、地図、トラフィックデータ分野を長年手がけており、
+特に リアルタイム交通データ（Traffic） を中核プロダクトとしている
+
+2. TomTom Traffic の特色（注目ポイント）
+大量のプローブデータ（FCD）によるリアルタイム性
+
+TomTom Traffic は Floating Car Data（FCD） を主軸に構成
+
+スマートフォン、車載機器、アプリ等から送信される
+匿名化された移動ログを大量に収集・解析
+
+これにより以下が可能：
+
+渋滞検知
+
+現在速度の推定
+
+自由流（free flow）との比較
+
+近未来の交通状況予測
+
+公式解説
+https://www.tomtom.com/newsroom/product-focus/tomtom-traffic-stats-explained/
+
+3. 日本国内でのデータ採取・パートナー連携
+日本の交通データが利用されている根拠
+
+TomTom Traffic Index に日本の都市（例：福岡）が含まれている
+→ 日本国内の移動データを用いた解析が行われていることを示唆
+
+https://www.tomtom.com/traffic-index/city/fukuoka
+
+日本の位置情報企業 ジオテクノロジーズ が、
+国内アプリ由来のプローブデータを TomTom に提供していることが公式に発表されている
+
+https://kyodonewsprwire.jp/release/202502033730
+
+地域パートナー（日本）
+
+TomTom は国・地域ごとに現地パートナーと協業
+
+日本では ZENRIN（ゼンリン）と公式に協業していることが発表されている
+→ 日本向けの高精度地図・交通関連サービスの強化を目的とした連携
+
+https://www.zenrin.co.jp/information/public/171027.html
+
+➡ 結論
+TomTom はオランダ企業だが、交通データはグローバルに収集・統合されており、
+日本国内のプローブデータおよび日本企業との連携を通じたデータが Traffic サービスに反映されている
+
+4. 利用を想定する主要 API
+① Traffic Flow API（最重要）
+
+用途
+
+道路ごとの現在速度
+
+自由流（free flow）との比較
+
+渋滞レベル算出
+
+適している理由
+
+MapLibre + ZENRIN 地図上の任意道路に対し
+「今どれくらい混んでいるか」を 数値データとして取得可能
+
+地図タイル不要の 純 REST API
+
+主な取得方法
+
+緯度・経度指定
+
+道路セグメント指定
+
+公式ドキュメント
+https://developer.tomtom.com/traffic-api/documentation/traffic-flow/flow-segment-data
+
+② Traffic Incidents API
+
+用途
+
+事故
+
+工事
+
+車線規制
+
+通行止め
+
+適している理由
+
+ZENRIN 地図上に
+🚧 事故アイコン / 工事エリア / 規制区間
+を 独自UIでオーバーレイ表示できる
+
+BBox（範囲）指定で対象地域の情報を一括取得可能
+
+公式ドキュメント
+https://developer.tomtom.com/traffic-api/documentation/traffic-incidents/traffic-incidents-service
+
+5. 技術的な強み（API設計面）
+
+高い更新頻度
+
+Traffic Flow API は 毎分更新レベルで最新情報を提供
+
+リアルタイム表示・分析用途に有利
+
+多様な配信方式
+
+REST（JSON）
+
+ラスタ / ベクタタイル
+
+Protobuf / DATEX II（エンタープライズ向け）
+
+エンタープライズ向け拡張
+
+Intermediate Traffic API によるサーバ間・大量配信対応
+
+交通センター・自治体・分析基盤向け
+
+6. データソース補足：Floating Car Data（FCD）
+”
+TomTom は以下から送信される 匿名化プローブデータ を収集：
+
+自社デバイス
+
+車載インダッシュシステム
+
+アプリ・提携サービス
+
+リアルタイム速度・旅行時間算出の主要ソース
+
+https://developer.tomtom.com/move-portal/guides/od-analysis/introduction
