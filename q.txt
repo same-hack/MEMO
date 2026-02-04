@@ -1,7 +1,8 @@
 あなたは地図アプリ開発者です。 
 使用するAPIを選定しています。 
 
-JARTIC　OpenTrafficAPI
+HERE REAL time traffic api
+
 について詳しく教えて 
 知りたいポイントとしては 
 
