@@ -176,3 +176,47 @@ Professional：470 USD → 約73,522円 / 月
 https://old.openweathermap.org/price
 
 https://www.boj.or.jp/statistics/market/forex/fxdaily/fxlist/fx260204.pdf
+
+
+
+
+
+
+
+■One Call API 3.0（統合気象データ取得API）
+1つの地点（緯度・経度）に対して、以下の 複数種類の天候データを1レスポンスで取得できる統合API。
+
+現在の天気、気温、体感温度、風速・風向、降水量、雲量など
+参考：https://docs.openweather.co.uk/api/one-call-3
+
+■Road Risk API（ルート単位の気象リスク評価API）
+移動ルートを「時刻付きの座標点列」として渡すことで、
+そのルート上の各地点・各時刻における 気象条件と国の警報情報を返すAPI。
+
+路面温度・ブラックアイス（路面凍結状態）は日本では取得不可
+
+参考：https://docs.openweather.co.uk/api/road-risk
+
+■Weather Maps 2.0（地図タイル型・気象レイヤーAPI）
+
+降水・雲量・気温・風などの気象情報を、
+地図タイル（z/x/y）形式の画像レイヤーとして取得できるAPI。
+
+参考：https://docs.openweather.co.uk/api/weather-map-2
+
+■Air Pollution API（大気汚染データAPI）
+
+指定した地点の 大気汚染状況を取得できるAPI。
+
+PM2.5 / PM10
+NO₂ / SO₂ / CO / O₃
+
+参考：https://docs.openweather.co.uk/api/air-pollution
+
+■Geocoding API（地名と座標の相互変換API）
+
+地名 → 緯度・経度
+緯度・経度 → 地名
+を相互に変換するAPI。
+
+参考：https://docs.openweather.co.uk/api/geocoding-api
