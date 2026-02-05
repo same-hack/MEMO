@@ -1,0 +1,161 @@
+① 概要（会社所在地／日本対応／出典＝データ取得元）
+
+会社: OpenWeather（OpenWeather Ltd.）。公式サイト上で「Headquarters in London, UK（本社：英国ロンドン）」と明記されています。
+
+日本の地図（=日本の地点・座標）対応: OpenWeather の主要 API は緯度経度（lat/lon）で取得する設計で、少なくとも One Call 3.0 / Air Pollution / Weather Maps / Geocoding などは “any location / any coordinates on the globe” として提供されています。したがって 日本の地点（座標）自体は対応です。
+
+出典（どこからデータ取得しているか）:
+
+OpenWeather は、予報・現在値などを **独自の「OpenWeather Model（OWM）」**に基づくデータとして説明しています（=自社モデル／統合モデル由来）。
+
+さらに **National weather alerts（国別の警報）**は、各国の警報ソース（発表機関）を列挙しており、日本として 「Japan Meteorological Business Support Center（気象業務支援センター）」が一覧に含まれることが確認できます（=日本の警報ソースが組み込まれている）。
+
+参考：URL
+https://openweathermap.org/faq
+
+https://docs.openweather.co.uk/api/one-call-3
+
+https://docs.openweather.co.uk/api/road-risk
+
+② 特色（他の地図系APIと比べて強い点）
+
+“地図の上に重ねる”用途に直結するプロダクトが揃っている
+
+タイル形式の **Weather Maps（例：tile.openweathermap.org/map/...）**を公式に提供しており、地図（MapLibre/Leaflet等）のレイヤーとして扱いやすいです。
+
+One Call API 3.0 が「移動体の運用監視」に向く粒度
+
+1回の呼び出しで current/minutely/hourly/daily/alerts 等をまとめて取得し、さらに **timemachine（時刻指定）/ day_summary（日別集計）/ overview（要約）**などの“運用向け”エンドポイントが整理されています。
+
+Road Risk API が「ルート上の点列」に最適化
+
+ルートを「時刻付きの点列（lat, lon, dt）」として投げ、各点で気温・風・降水・露点に加え、国別警報を返す設計です（調査員・調査車のトラック監視に合わせやすい）。
+
+参考：URL
+https://docs.openweather.co.uk/api/road-risk
+
+https://docs.openweather.co.uk/api/one-call-3
+
+https://old.openweathermap.org/api/weathermaps
+
+③ 主要なAPI（endpoint）リスト（日本対応の可否をAPIごとに明記）
+
+※「日本対応」は (A) 日本の座標で呼べるか と (B) 機能の地域制限があるか を分けて記載します。
+
+A. 現在天気（Current Weather）
+
+Endpoint（例）:
+
+https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
+
+https://api.openweathermap.org/data/2.5/weather?id={city id}&appid={API key}
+
+日本対応: 対応（日本の city 名 / country code / 座標等で取得可能な設計）
+
+参考：URL
+https://old.openweathermap.org/current
+
+B. 5日間・3時間予報（5 day / 3 hour forecast）
+
+Endpoint（例）:
+
+api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
+
+api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
+
+日本対応: 対応（lat/lon や都市指定で取得）
+
+参考：URL
+https://old.openweathermap.org/forecast5
+
+C. One Call API 3.0（統合・現在/予報/警報 等）
+
+Endpoint: https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
+
+関連 endpoint（同ドキュメント内）:
+
+タイムマシン: https://api.openweathermap.org/data/3.0/onecall/timemachine?...
+
+日別サマリ: https://api.openweathermap.org/data/3.0/onecall/day_summary?...
+
+概要: https://api.openweathermap.org/data/3.0/onecall/overview?...
+
+日本対応:
+
+基本機能（current/hourly/daily 等）: 対応（lat/lon で取得）
+
+National weather alerts: 日本も “警報ソース一覧”に含まれる（Japan Meteorological Business Support Center）。ただし「必ず常時アラートが返る」ではなく、発表状況に依存します。
+
+参考：URL
+https://docs.openweather.co.uk/api/one-call-3
+
+D. Road Risk API（ルート上の点列に対する天候＋警報）
+
+Endpoint: POST https://api.openweathermap.org/data/2.5/roadrisk?appid={API key}
+
+日本対応: 部分対応
+
+ルート上の各点で返す 気温・風・降水・露点・警報は設計上利用可能
+
+ただし **路面温度（road surface temperature）とブラックアイス路面状態（black ice road state）は “US と EU の territories のみ”**と明記されているため、日本は非対応
+
+参考：URL
+https://docs.openweather.co.uk/api/road-risk
+
+E. Air Pollution API（大気汚染）
+
+Endpoint（現在/予報/履歴）:
+
+現在: http://api.openweathermap.org/data/2.5/air_pollution?lat={lat}&lon={lon}&appid={API key}
+
+予報: http://api.openweathermap.org/data/2.5/air_pollution/forecast?...
+
+履歴: http://api.openweathermap.org/data/2.5/air_pollution/history?...
+
+日本対応: 対応（“any coordinates on the globe” と明記）
+
+参考：URL
+https://old.openweathermap.org/api/air-pollution
+
+F. Geocoding API（地名⇄座標）
+
+Endpoint（例：ZIP）: http://api.openweathermap.org/geo/1.0/zip?zip={zip code},{country code}&appid={API key}
+
+日本対応: 対応（country code を使う設計。日本は JP）
+
+参考：URL
+https://old.openweathermap.org/api/geocoding-api
+
+G. Weather Maps 1.0（タイル）
+
+Endpoint: https://tile.openweathermap.org/map/{layer}/{z}/{x}/{y}.png?appid={API key}
+
+日本対応: 対応（タイルは地理座標に基づくため、日本領域も表示可能。ページ上も “worldwide” として例示）
+
+参考：URL
+https://old.openweathermap.org/api/weathermaps
+
+④ 料金体系（円換算つき・URL必須）
+
+為替は 2026-02-05 時点の目安として 1 GBP = 214 JPY を用いて円換算しています。
+※ OpenWeather の「Free」や「Enterprise」の価格は公式 Pricing ページに明記があります。
+
+Free（無料枠）
+
+金額: 0円
+
+内容（例）: Pricing ページに「Start Exploring For Free」として、60 API calls/minute・1,000,000 calls/month などの無料枠表記があります。
+
+参考：URL
+https://openweathermap.org/price
+
+Enterprise plan
+
+金額: £3,000 / month（公式明記）
+
+円換算: 約 642,000 円 / 月（3,000 × 214）
+
+内容（公式説明の要点）: enterprise 商用ライセンス、OpenWeather API スイートへのフルアクセス、高スループット、10分以下更新、SLA 99.9% 等。
+
+参考：URL
+https://openweathermap.org/price
