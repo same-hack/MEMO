@@ -1,0 +1,142 @@
+① 概要（運営主体の国／日本地図対応／データ出典）
+
+**WAGRI（農業データ連携基盤）**は、農業に役立つ 気象・農地・生育予測などのデータ／プログラムを API で提供する公的クラウドサービスです。ICTベンダーや農機メーカー等が会員になり、APIを組み合わせてアプリやWebサービスを開発することを想定しています。
+また、WAGRIは 2019年度から国立研究開発法人 農業・食品産業技術総合研究機構（農研機構 / NARO）が運営主体となり本格運用しています（＝運営主体は日本）。
+
+日本の地図は対応しているか
+WAGRIの主要データは 日本の農業・行政データを中心に構成されます。例として、農地ピン情報は 農林水産省と連携した eMAFF農地ナビ由来の情報として提供され、APIも緯度経度で取得できます。
+気象も、日本の公的情報として 気象庁の防災気象情報（XML）をWAGRI経由で提供するAPIがあります。
+
+出典（どこからデータ取得しているのか）（代表例）
+
+気象庁：防災気象情報（XML）をWAGRI運営事務局がAPI化して提供
+
+農林水産省（eMAFF農地ナビ）：農地ピン情報をWAGRI運営事務局が提供
+
+民間気象ベンダー：例として「株式会社ヘッジホッグ・メドテック」提供のピンポイント天気／30日天気／気象防災シグナル等（WAGRI配下のAPIとして利用）
+
+農研機構の研究成果：例として北海道農業研究センターの「先行降雨指数」などを、WAGRIのゲートウェイ機能経由で取得
+
+参考：https://wagri.naro.go.jp/about_wagri/
+
+参考：https://www.naro.go.jp/laboratory/rcait/wagri/20190326/
+
+参考：https://wagri.naro.go.jp/wagri_api/weatherforecast/
+
+参考：https://wagri.naro.go.jp/wagri_api/agriculturalland-searchbylongitudelatitude/
+
+② 特色（他の地図系APIと比べて何が強いか）
+
+地図系API（Google Maps等）が主に「地図描画・経路・施設検索」を核にするのに対し、WAGRIの強みは “日本の農業関連データを、横断的にAPIで組み合わせられる” 点です。具体的には：
+
+公的データ＋研究成果＋民間データを、同一基盤（WAGRI）で扱える
+気象庁防災気象情報のAPI化 、農林水産省由来の農地ピン情報 、研究成果API（先行降雨指数） のように、出典が異なるデータを “WAGRI経由” で利用できます。
+
+位置（緯度経度）で使える気象／農地APIが用意されている
+例：農地ピンは緯度経度範囲で検索でき、レスポンスも座標・地目・面積等を返します。
+調査員・調査車の現在地に対して「周辺の天候リスク」「近傍の属性データ（農地等）」を紐づける用途と相性が良いです。
+
+ベーシックAPI（申込不要）と、有償/無償オプションAPIが混在
+例：気象庁Forecastや農地ピンの一部は「ベーシックAPI（申込不要）」として掲載されています。
+
+参考：https://wagri.naro.go.jp/wagri_api/
+
+参考：https://wagri.naro.go.jp/api-html/
+
+③ 主要なAPI（endpoint）リスト（ページリンク付き）
+
+下記は **「移動×天候可視化」**で使いやすい代表例です（各APIページに“新URL（api.wagri2.net）”が明記されているものを優先）。
+
+気象（Weather）
+
+気象情報取得API（気象庁）：Forecast（府県の天気予報／防災気象情報XMLベース）
+
+Endpoint（新URL）：https://api.wagri2.net/basic/weather/jma/Forecast
+
+APIページ： https://wagri.naro.go.jp/wagri_api/weatherforecast/
+
+出典：気象庁（防災気象情報XML）
+参考：https://wagri.naro.go.jp/wagri_api/weatherforecast/
+
+ピンポイント天気（ヘッジホッグ・メドテック）（1時間ごとの詳細気象、緯度経度or地点コード）
+
+Endpoint（新URL・例）：https://api.wagri2.net/h-medtech/weather/[※ディレクトリ名]/asp/getElements?...&lat=〖緯度〗&lon=〖経度〗...
+
+APIページ： https://wagri.naro.go.jp/wagri_api/pinpoint_weather/
+
+参考：https://wagri.naro.go.jp/wagri_api/pinpoint_weather/
+
+30日間天気（ヘッジホッグ・メドテック）（最長33日先：天気・気温・降水確率）
+
+Endpoint（新URL・例）：https://api.wagri2.net/h-medtech/weather/[※ディレクトリ名]/asp/getElements?...&where=CHITEN_〖地点コード〗...
+
+APIページ： https://wagri.naro.go.jp/wagri_api/30days_weather/
+
+参考：https://wagri.naro.go.jp/wagri_api/30days_weather/
+
+気象防災シグナル（ヘッジホッグ・メドテック）（大雨・強雨・暴風・大雪のリスクを最長2週間前から）
+
+Endpoint（新URL・例）：https://api.wagri2.net/h-medtech/weather/[※ディレクトリ名]/asp/getElements?...
+
+APIページ： https://wagri.naro.go.jp/wagri_api/weather_disaster_prevention/
+
+参考：https://wagri.naro.go.jp/wagri_api/weather_disaster_prevention/
+
+先行降雨指数API（農研機構：北海道農業研究センター）（土壌の乾湿指標＋入力気象データ等）
+
+Endpoint（新URL）：https://api.wagri2.net/naro-harc/others/met1/v1/GetAntPrecIndexResult
+
+APIページ： https://wagri.naro.go.jp/wagri_api/getantpreclndexresult/
+
+参考：https://wagri.naro.go.jp/wagri_api/getantpreclndexresult/
+
+農地（位置に紐づく属性データとして有用）
+
+農地ピン情報取得API：SearchByLongitudeLatitude（WAGRI運営事務局）（緯度経度範囲で農地ピン）
+
+Endpoint（新URL）：https://api.wagri2.net/basic/farmland/AgriculturalLand/SearchByLongitudeLatitude?minLatitude={...}&maxLatitude={...}&minLongitude={...}&maxLongitude={...}
+
+APIページ： https://wagri.naro.go.jp/wagri_api/agriculturalland-searchbylongitudelatitude/
+
+出典：農林水産省（eMAFF農地ナビ連携）
+参考：https://wagri.naro.go.jp/wagri_api/agriculturalland-searchbylongitudelatitude/
+
+〖高速版〗農地ピン情報取得API v2：SearchByLongitudeLatitude（同等目的の高速版）
+
+Endpoint（新URL・例）：https://api.wagri2.net/basic/farmland/AgriculturalLand/SearchByLongitudeLatitude?minLatitude=...
+
+APIページ： https://wagri.naro.go.jp/wagri_api/agriculturalland2-searchbylongitudelatitude/
+
+参考：https://wagri.naro.go.jp/wagri_api/agriculturalland2-searchbylongitudelatitude/
+
+地図（※WAGRI自体が地図描画の本命ではないが、選択肢として）
+
+地図情報取得API：WmtsServiceMetaData（NTTインフラネット / GEOSPACE CDS）
+
+掲載されている旧URL：https://api.wagri.net/API/Public/Map/WmtsServiceMetaData
+
+APIページ： https://wagri.naro.go.jp/wagri_api/map-wmtsservicemetadata/
+
+注意：利用には NTTインフラネットとのライセンス契約が必要（WAGRIの有償オプション扱い）
+参考：https://wagri.naro.go.jp/wagri_api/map-wmtsservicemetadata/
+
+（重要）公開ページにendpointが明記されないAPIもある
+
+**1kmメッシュ農業気象データ取得API（AuthenticationKey / AMD）**は、公開ページ上で「詳細なAPI仕様書は、お申し込み後に個別送付」とされており、endpointを一般公開していない形です。
+参考：https://wagri.naro.go.jp/wagri_api/1kmmesh_apiauthenticationkey/
+
+参考：https://wagri.naro.go.jp/wagri_api/1kmmesh_apiamd/
+
+④ 料金体系（URL必須）
+
+WAGRI公式の「利用料金」ページに基づく概要です。
+
+データ利用・提供会員：40,000円／月・クライアント
+
+データ転送量：20GB／月が上限、超過は 2,000円／GB
+
+データ提供会員：無料（自社データ提供のみ、データ利用は不可）
+
+お試し会員：無料（100回／月、25MB／月など制限あり）
+
+参考：https://wagri.naro.go.jp/about_wagri/fee/
