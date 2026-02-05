@@ -1,0 +1,187 @@
+1. 概要
+会社はどこの国の会社か
+
+フィンランドに本社を置く Vaisala が提供する気象・環境データ API サービス
+
+2022 年に米国の AerisWeather を買収・統合し、「Vaisala Xweather」として展開
+
+参考：https://www.vaisala.com/en/about-vaisala
+
+参考：https://www.vaisala.com/en/press-releases/2022-01/vaisala-accelerates-growth-its-weather-and-environmental-data-business-acquiring-us-based-aerisweather
+
+日本の地図は対応しているか
+
+対応している（グローバル対応）
+
+ただし Xweather は 道路地図そのものは提供しない
+
+Google Maps / Mapbox / OpenStreetMap / 国土地理院地図などの 既存ベース地図に、気象・環境データを重ねる用途
+
+地図表示用データは Web Mercator（Spherical Mercator）タイル形式
+
+参考：https://www.xweather.com/docs/maps/getting-started/map-tiles
+
+出典（どこからデータ取得しているか）
+
+Xweather は 自社観測データ＋公的機関データ＋数値モデルを統合して提供している。
+
+2. データ出典の内訳
+① Vaisala / Xweather 自社データ
+世界中に展開する Vaisala の観測ネットワーク
+
+Vaisala が自社で運用・契約する気象・環境センサー網および解析基盤
+
+参考：https://www.vaisala.com/en/products/weather-environmental-sensors
+
+参考：https://www.vaisala.com/en/solutions/weather-and-environmental-monitoring
+
+雷（Lightning Strike / Lightning Threat）
+
+Vaisala 独自の雷検知ネットワークと解析モデル
+
+雷ストライク、極性、強度、雷脅威（Threat）を生成
+
+参考：https://www.xweather.com/docs/weather-api/endpoints/lightning
+
+参考：https://www.xweather.com/docs/weather-api/endpoints/lightning-threats
+
+参考：https://www.vaisala.com/en/products/lightning-detection-systems
+
+雹（Hail）
+
+雹の発生履歴・雹リスク・雹予測を Vaisala の解析モデルで生成
+
+参考：https://www.vaisala.com/en/weather/hail-detection-and-forecasting
+
+参考：https://www.xweather.com/docs/weather-api/resources/credits
+
+一部の大気質解析（Air Quality）
+
+複数ソースを統合したうえで Xweather 側で再解析した大気質データ
+
+AQI、汚染物質指標などを提供
+
+参考：https://www.xweather.com/docs/weather-api/endpoints/airquality
+
+参考：https://www.xweather.com/docs/weather-api/resources/credits
+
+道路気象（Road Weather）
+
+Vaisala の路面センサー技術・解析モデルを基にした道路状態データ
+
+路面凍結、湿潤、降雪、走行リスク指標など
+
+参考：https://www.xweather.com/docs/weather-api/endpoints/roadweather
+
+参考：https://www.vaisala.com/en/products/road-weather
+
+独自統合モデル（Global / Integrated Models）
+
+観測データと複数数値予報モデルを統合した Xweather 独自モデル
+
+参考：https://www.vaisala.com/en/weather/weather-forecasting
+
+参考：https://www.xweather.com/docs/weather-api/resources/credits
+
+② 公的・国際機関データ
+
+各国気象機関の警報・観測データ
+
+NOAA（米国）
+
+EPA AirNow（大気質）
+
+Copernicus Atmosphere Monitoring Service（CAMS）
+
+Canada Wildfire Information System など
+
+参考：https://www.xweather.com/docs/weather-api/resources/credits
+
+3. 特色（他の地図系 API と比べて何が強いか）
+地図アプリ前提の設計
+
+タイル形式でそのまま地図に重ねられる
+
+ナビ、運行管理、防災用途と親和性が高い
+
+参考：https://www.xweather.com/docs/maps/getting-started/map-tiles
+
+判断系データが豊富
+
+雷接近判定
+
+路面凍結・走行リスク
+
+雹・強風・大気質など
+→ 単なる「天気表示」以上の意思決定に使える
+
+参考：https://www.xweather.com/docs/weather-api/endpoints
+
+自社観測＋公的データのハイブリッド
+
+単一機関依存ではない
+
+国や地域によるデータ欠損を補完可能
+
+参考：https://www.xweather.com/docs/weather-api/resources/credits
+
+4. 料金体系（URL 必須）
+
+公式は 個別見積が基本
+
+実利用者ベースの価格目安が外部に公開されている
+
+参考：https://www.trustradius.com/products/xweather-api/pricing
+
+（例：月額 約300〜950 USD、サポート費別）
+
+5. 主要 API（endpoint）一覧
+エンドポイント総覧
+
+参考：https://www.xweather.com/docs/weather-api/endpoints
+
+主なエンドポイント
+観測データ（Observations）
+
+参考：https://www.xweather.com/docs/weather-api/endpoints/observations
+
+気象条件・予報（Conditions）
+
+参考：https://www.xweather.com/docs/weather-api/endpoints/conditions
+
+雷（Lightning）
+
+参考：https://www.xweather.com/docs/weather-api/endpoints/lightning
+
+雷脅威（Lightning Threats）
+
+参考：https://www.xweather.com/docs/weather-api/endpoints/lightning-threats
+
+道路気象（Road Weather）
+
+参考：https://www.xweather.com/docs/weather-api/endpoints/roadweather
+
+道路気象分析（Road Weather Analytics）
+
+参考：https://www.xweather.com/docs/weather-api/endpoints/roadweather-analytics
+
+大気質（Air Quality）
+
+参考：https://www.xweather.com/docs/weather-api/endpoints/airquality
+
+気象警報（Alerts）
+
+参考：https://www.xweather.com/docs/weather-api/endpoints/alerts
+
+6. 資料用・一文要約（そのまま使用可）
+
+Vaisala Xweather は、Vaisala が世界中に展開する自社観測ネットワークと解析基盤に、公的気象機関および国際モデルのデータを統合し、雷・道路気象・雹・大気質など地図アプリ向けの高付加価値な気象・環境データを API として提供している。
+
+ここまでで 技術資料・API 選定資料にそのまま載せられる粒度になっています。
+次は
+
+「日本で実運用する場合に“自社データ / 公的データ”どこが効くか」
+
+HERE / TomTom / JARTIC と “データ取得手法”だけの比較表
+
+地図×気象で やりがちな設計ミス
