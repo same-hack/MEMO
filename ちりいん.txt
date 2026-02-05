@@ -1,0 +1,145 @@
+
+■ 概要
+
+提供主体
+
+国土地理院（Geospatial Information Authority of Japan, GSI）
+
+日本の国の機関（国土交通省の外局）。民間企業ではない。
+
+対応地域
+
+主に 日本全国（一部タイルは全球対応）。
+
+日本の測量・地図の基盤データを公式に提供。
+
+出典（データソース）
+
+国土地理院の測量成果・基盤地図情報が中心。
+
+タイル種別によっては第三者が権利を持つデータを含むため、タイルごとの出典表記が必須。
+
+公式一次ソース
+
+地理院タイル一覧（全タイルの公式カタログ）
+https://maps.gsi.go.jp/development/ichiran.html?utm_source=chatgpt.com
+
+国土地理院コンテンツ利用規約
+https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html?utm_source=chatgpt.com
+
+出典の記載方法（クレジット表記）
+https://www.gsi.go.jp/LAW/2930-meizi.html?utm_source=chatgpt.com
+
+■ 特色（他の地図系APIと比べて強い点）
+
+公的・基盤地図としての信頼性
+
+ナビ用途中心の民間地図と異なり、測量・行政・防災を前提に整備された地図。
+
+地形・標高・傾斜に強い
+
+標高、陰影、傾斜量など、「移動のしんどさ・遅延要因」分析に直結するタイルが標準提供されている。
+
+XYZタイルでそのまま利用可能
+
+Leaflet / MapLibre / OpenLayers 等で即利用可能。
+
+仕様が公開されており、URL構造が明確。
+
+実験的だがベクトルタイルも提供
+
+道路・建物を属性付きデータとして扱え、クライアント側で色・太さを制御可能（実験扱い）。
+
+公式仕様（URL命名規則など）
+https://maps.gsi.go.jp/development/siyou.html?utm_source=chatgpt.com
+
+■ オススメのテーマ（あなたの要件向け）
+1) 勾配・高低差の可視化（最重要）
+傾斜量図
+
+用途：急坂・歩行/走行負荷の高い区間の把握
+
+特徴：傾斜角度を色分け表示
+
+公式ソース：
+https://maps.gsi.go.jp/development/ichiran.html?utm_source=chatgpt.com
+
+色別標高図
+
+用途：ルート全体の高低差を直感的に把握
+
+公式ソース：
+https://maps.gsi.go.jp/development/ichiran.html?utm_source=chatgpt.com
+
+陰影起伏図
+
+用途：地形の凹凸・尾根・谷を視覚的に理解
+
+公式ソース：
+https://maps.gsi.go.jp/development/ichiran.html?utm_source=chatgpt.com
+
+2) 地形条件・環境要因の可視化
+土地条件図
+
+用途：都市部／農地／造成地など、土地の性質把握
+
+遅延要因との関係：未舗装・足場の悪さの推定材料
+
+公式ソース：
+https://maps.gsi.go.jp/development/ichiran.html?utm_source=chatgpt.com
+
+治水地形分類図
+
+用途：浸水・水はけの悪さを地形から推定
+
+雨天時の遅延要因分析に有効
+
+公式ソース：
+https://maps.gsi.go.jp/development/ichiran.html?utm_source=chatgpt.com
+
+3) 背景確認用（現地状況の把握）
+写真（航空写真）
+
+用途：現地の建物密度・道幅・周辺環境の把握
+
+GPS軌跡との重ね合わせに有効
+
+公式ソース：
+https://maps.gsi.go.jp/development/ichiran.html?utm_source=chatgpt.com
+
+4) スタイル制御が必要な場合（上級・実験）
+地理院ベクトルタイル（実験）
+
+用途：道路・建物を意味的に扱い、色や太さを制御
+
+注意：実験提供（仕様変更の可能性あり）
+
+公式ソース（一次情報）：
+https://maps.gsi.go.jp/development/vt_expt.html?utm_source=chatgpt.com
+
+仕様・サンプル（GitHub）：
+https://github.com/gsi-cyberjapan/gsimaps-vector-experiment?utm_source=chatgpt.com
+
+■ 重要な注意点（要件整理として）
+
+天気（雨・風）：地理院タイルでは提供されない
+
+渋滞・交通量：地理院タイルでは提供されない
+
+→ これらは
+
+気象API（気象庁/Open-Meteo/OpenWeather 等）
+
+交通API（HERE / TomTom / JARTIC 等）
+との重ね合わせ前提になる。
+
+■ まとめ（設計視点）
+
+勾配・地形由来の遅延分析：
+傾斜量図 + 標高/陰影系タイルが非常に相性が良い。
+
+背景地図：
+標準地図 or 写真。
+
+道路スタイルを制御したい：
+地理院ベクトルタイル（実験）を検討。
