@@ -1,0 +1,160 @@
+Google Maps API（正式には Google Maps Platform）は、米国の Google（Google LLC / Alphabet 傘下）が提供する地図・位置情報API群です。
+参考：https://about.google/company-info/locations/
+
+参考：https://about.google/
+
+日本の地図は対応しているか
+
+Google Maps Platform は「世界中の場所」を対象に地図を表示・検索できることを前提に設計されており、日本も対象地域に含まれます（地図表示、ジオコーディング、Places 検索などを日本の住所・地点で利用可能）。
+参考：https://developers.google.com/maps/documentation/javascript/overview
+
+参考：https://developers.google.com/maps/documentation/geocoding/start
+
+参考：https://developers.google.com/maps/documentation/places/web-service
+
+出典（どこからデータ取得しているか）
+
+Google Maps の基盤データは、各国の公的機関データを含む「多数のサードパーティ提供データ」、衛星・ストリートレベル画像（Street View等）、機械学習による抽出、ユーザー投稿（UGC）などを組み合わせて更新されています。
+参考：https://blog.google/products-and-platforms/products/maps/google-maps-101-how-we-map-world/
+
+参考：https://mapsplatform.google.com/resources/blog/9-things-know-about-googles-maps-data-beyond-map/
+
+参考：https://www.google.com/streetview/policy/
+
+2) 特色（他の地図系APIと比べて何が強いか）
+強みの要点
+
+地図表示の完成度と実装手段が多い（Web/静的画像/埋め込み/モバイルSDK）
+Web（Maps JavaScript API）、静的画像（Maps Static API）、iframe埋め込み（Maps Embed API）、Android SDK など用途別の選択肢が揃っています。
+参考：https://developers.google.com/maps/documentation
+
+参考：https://developers.google.com/maps/documentation/javascript
+
+参考：https://developers.google.com/maps/documentation/maps-static
+
+参考：https://developers.google.com/maps/documentation/embed/get-started
+
+参考：https://developers.google.com/maps/documentation/android-sdk
+
+Places（施設・店舗・POI）データが強い
+Places API は「2億件超の場所データ」をうたい、検索・詳細・オートコンプリートなどを提供します（FieldMask による取得項目制御が前提）。
+参考：https://developers.google.com/maps/documentation/places/web-service
+
+参考：https://developers.google.com/maps/documentation/places/web-service/reference/rest/v1/places/searchText
+
+ルーティング（Routes API）が“新本流”で高機能（ETA/交通考慮/行列計算など）
+Routes API は computeRoutes / computeRouteMatrix を中核に、経路・所要時間・距離などを提供します。
+参考：https://developers.google.com/maps/documentation/routes
+
+参考：https://developers.google.com/maps/documentation/routes/reference/rest
+
+Street View という差別化資産（静的画像・分析系など）
+Street View Static API でパノラマ/サムネを簡単に取得でき、画像出典（Google/投稿）も明記されています。
+参考：https://developers.google.com/maps/documentation/streetview/overview
+
+参考：https://www.google.com/streetview/policy/
+
+3) 料金体系（URL必須）
+
+Google Maps Platform の課金は大きく 従量課金（Pay as you go） と、対象APIをまとめた サブスクリプションプラン（Subscribe to save） が案内されています。詳細な単価は SKU（課金品目）単位で示され、SKU別の請求・上限・分析方法もドキュメント化されています。
+参考：https://mapsplatform.google.com/pricing/
+
+参考：https://developers.google.com/maps/billing-and-pricing/pricing
+
+参考：https://developers.google.com/maps/billing-and-pricing/sku-details
+
+参考：https://developers.google.com/maps/billing-and-pricing/billing
+
+4) 主要API（endpoint）リスト + 公式ドキュメントリンク
+
+下記は「代表的に採用されやすい」APIを中心に、実際のホスト/URL形式（またはサービスエンドポイント） と 公式ドキュメント をセットで整理しています。
+
+Maps（地図表示）
+
+Maps JavaScript API（Webの動的地図）
+ドキュメント：https://developers.google.com/maps/documentation/javascript
+
+概要：https://developers.google.com/maps/documentation/javascript/overview
+
+Maps Static API（静的地図画像）
+エンドポイント（URLベース）：https://maps.googleapis.com/maps/api/staticmap
+ドキュメント：https://developers.google.com/maps/documentation/maps-static/overview
+
+開始：https://developers.google.com/maps/documentation/maps-static/start
+
+Maps Embed API（iframe埋め込み）
+ドキュメント：https://developers.google.com/maps/documentation/embed/get-started
+
+埋め込みモード説明：https://developers.google.com/maps/documentation/embed/embedding-map
+
+Geocoding（住所<->緯度経度）
+
+Geocoding API
+リクエスト形式（URLベース）：https://maps.googleapis.com/maps/api/geocode/outputFormat?parameters
+ドキュメント：https://developers.google.com/maps/documentation/geocoding/requests-geocoding
+
+開始：https://developers.google.com/maps/documentation/geocoding/start
+
+Places（施設検索・詳細・オートコンプリート等）
+
+Places API（New / Web Service）
+例：Text Search（POST）https://places.googleapis.com/v1/places:searchText
+リファレンス（searchText）：https://developers.google.com/maps/documentation/places/web-service/reference/rest/v1/places/searchText
+
+製品トップ：https://developers.google.com/maps/documentation/places/web-service
+
+概要：https://developers.google.com/maps/documentation/places/web-service/overview
+
+Routes（経路・距離行列）
+
+Routes API
+サービスエンドポイント：https://routes.googleapis.com
+リファレンス（サービス概要）：https://developers.google.com/maps/documentation/routes/reference/rest
+
+メソッド例（computeRoutes）：https://developers.google.com/maps/documentation/routes/reference/rest/v2/TopLevel/computeRoutes
+
+製品トップ：https://developers.google.com/maps/documentation/routes
+
+Roads（スナップ・速度制限など）
+
+Roads API（Snap to Roads）
+ドキュメント：https://developers.google.com/maps/documentation/roads/snap
+
+概要：https://developers.google.com/maps/documentation/roads/overview
+
+Roads API（Speed Limits）
+ドキュメント：https://developers.google.com/maps/documentation/roads/speed-limits
+
+Elevation（標高）
+
+Elevation API
+概要：https://developers.google.com/maps/documentation/elevation/overview
+
+リクエスト/レスポンス：https://developers.google.com/maps/documentation/elevation/requests-elevation
+
+開始：https://developers.google.com/maps/documentation/elevation/start
+
+Time Zone（タイムゾーン）
+
+Time Zone API
+概要：https://developers.google.com/maps/documentation/timezone/overview
+
+リクエスト形式（URLベース）：https://developers.google.com/maps/documentation/timezone/requests-timezone
+
+開始：https://developers.google.com/maps/documentation/timezone/get-started
+
+Geolocation（Wi-Fi/基地局から概算位置）
+
+Geolocation API
+POST先：https://www.googleapis.com/geolocation/v1/geolocate?key=YOUR_API_KEY
+ドキュメント：https://developers.google.com/maps/documentation/geolocation/requests-geolocation
+
+概要：https://developers.google.com/maps/documentation/geolocation/overview
+
+Street View（静的画像）
+
+Street View Static API
+例：https://maps.googleapis.com/maps/api/streetview?...
+概要：https://developers.google.com/maps/documentation/streetview/overview
+
+製品トップ：https://developers.google.com/maps/documentation/streetview
