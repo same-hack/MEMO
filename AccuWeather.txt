@@ -1,0 +1,161 @@
+① 概要
+会社 / 日本対応 / 出典（データ取得元）
+
+AccuWeather は、1962年設立の米国の民間気象情報会社です。
+グローバル向けに気象データ配信を行っており、API は 緯度・経度（GPS）指定で世界中の地点を対象に利用できます。
+
+AccuWeather API は「地図そのもの」を提供するものではなく、
+地図（MapLibre 等）＋ GPS 座標 → 天候情報を取得するための気象APIという位置づけです。
+Locations API により日本国内の緯度・経度から地点（Location Key）を取得でき、日本の地点にも正式対応しています。
+
+出典（データはどこから来ているか）
+
+AccuWeather が独自に構築・運用する全球気象解析・予測基盤
+
+観測データ・衛星・レーダー・数値予報モデルを統合した解析結果
+
+警報（Alerts）は、各国の政府・公的気象機関などの公式発表を含むと明記されている
+
+→ ユーザーは AccuWeather が統合・提供する気象データを API 経由で取得する構造。
+
+参考：URL
+https://en.wikipedia.org/wiki/AccuWeather
+
+https://developer.accuweather.com/documentation/location-keys
+
+https://developer.accuweather.com/core-weather/location-key-alerts
+
+② 特色（他の天候系APIと比べて強い点）
+分単位の短時間予測（MinuteCast™）
+
+AccuWeather の最大の特徴は MinuteCast™ による短時間予測です。
+緯度・経度を指定すると、今後最大120分間について、降水の有無や開始・終了タイミングを分単位で返却します。
+
+一般的な「1時間ごとの天気予報」よりも粒度が細かく、
+短時間の天候変化（特に降雨）を重視する用途に強みがあります。
+
+警報（Alerts）が公式情報ベース
+
+Alerts API では、
+政府・公的機関が発表する警報情報を含む気象警報を取得できます。
+そのため、国・地域ごとに警報APIを個別実装する必要がありません。
+
+地図非依存・GPS前提設計
+
+すべてのAPIは
+緯度・経度 → Location Key → 天候データ取得
+という流れで設計されており、使用する地図APIに依存しません。
+
+参考：URL
+https://developer.accuweather.com/core-weather/geoposition-locations
+
+https://developer.accuweather.com/minutecast/geoposition-minutecast
+
+③ 主要なAPI（endpoint）と取得できる情報
+
+※ 実装上、必須・利用頻度が高いもののみ記載。
+
+Locations API
+
+緯度・経度から Location Key（地点ID）を取得
+
+以降のすべての天候API呼び出しの前提となるAPI
+
+参考：URL
+https://developer.accuweather.com/core-weather/geoposition-locations
+
+Current Conditions API
+
+現在の天候状態
+
+気温・体感温度
+
+降水の有無
+
+風速・風向・視程 など
+
+参考：URL
+https://developer.accuweather.com/core-weather/location-key-currentconditions
+
+Forecasts API（予報）
+
+時間別予報（数時間〜数日先）
+
+日次予報（1日〜15日）
+
+参考：URL
+https://developer.accuweather.com/core-weather/location-key-hourly
+
+https://developer.accuweather.com/core-weather/location-key-daily
+
+MinuteCast™ API
+
+今後最大120分の降水予測
+
+降り始め・止みそうなタイミングを分単位で取得可能
+
+参考：URL
+https://developer.accuweather.com/minutecast/geoposition-minutecast
+
+Alerts API
+
+雷・暴風・大雨・洪水などの警報・注意報
+
+政府・公的機関の公式発表を含む
+
+参考：URL
+https://developer.accuweather.com/core-weather/location-key-alerts
+
+④ 料金体系（一次ソースから読み取れる内容）
+Core Weather API
+
+Free
+$0
+内容：14日間限定、1日500回まで（超過不可）
+
+Starter
+$2 / 月
+内容：1.5万回 / 月
+対象：Current Conditions、12時間予報、5日予報
+
+Standard
+$25 / 月
+内容：22.5万回 / 月
+対象：12時間予報、5日予報、5日分 Indices
+
+Prime
+$250 / 月
+内容：180万回 / 月
+対象：72時間予報、10日予報、Alerts、Imagery
+
+Elite
+$500 / 月
+内容：240万回 / 月
+対象：全API、120時間予報、15日予報、15日 Indices、Alerts、Imagery
+
+参考：URL
+https://developer.accuweather.com/documentation/overview
+
+MinuteCast™ API
+
+Free
+$0
+内容：14日間限定、1日50回まで（超過不可）
+
+Lite
+$25 / 月
+内容：1万回 / 月
+対象：MinuteCast™
+
+Full
+$100 / 月
+内容：67.5万回 / 月
+対象：MinuteCast™
+
+参考：URL
+https://developer.accuweather.com/documentation/overview
+
+料金ページ（公式入口）
+
+参考：URL
+https://developer.accuweather.com/pricing
