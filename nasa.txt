@@ -1,109 +1,178 @@
-① 概要（運営主体／日本対応／出典＝データ取得元）
+NASA Earthdata（黄砂対応を含む）解説
+① 概要
+
+（運営主体／日本対応／出典＝データ取得元）
 
 運営主体（どこの国の会社か）
-NASA Earthdata は企業サービスではなく、**米国の政府機関 NASA（National Aeronautics and Space Administration）**が、地球科学データの公開・配布の入口として提供しているポータル／データ基盤です。
+
+NASA Earthdata は、**アメリカ合衆国の政府機関 NASA（National Aeronautics and Space Administration）**が運営する、地球観測データの公式配布・検索基盤である。
+企業サービスではなく、NASA の地球科学データを一般公開するための国家プロジェクトとして提供されている。
+
 参考：https://www.earthdata.nasa.gov/
 
 日本の地図は対応しているか
-Earthdata は「地図（道路地図）」というより、**全球の衛星観測・地球科学データ（画像・グリッド・観測値・再解析など）**を提供する枠組みです。NASA の「フル＆オープン」ポリシーの下で、世界中の誰でもアクセス可能とされているため、日本域（日本の上空・周辺海域を含む）も対象に利用できます。
+
+Earthdata は道路地図やナビ地図を提供するサービスではないが、地球全域（全球）を対象とした観測データを扱っているため、日本列島および周辺海域は完全に対象範囲内である。
+日本上空を通過する衛星観測データ、再解析データ、画像タイルはすべて利用可能である。
+
 参考：https://www.earthdata.nasa.gov/about/earthdata-cloud-evolution
 
 出典（どこからデータ取得しているのか）
-基本は NASA の地球観測ミッション由来のデータ（衛星・センサー・処理アルゴリズム・メタデータ等）です。加えて Earthdata Search / CMR の検索対象には、NOAA・ESA・JAXA・ISRO などのデータも含み得ることが明記されています（=「Earthdata を通じて見つかるデータの出典が NASA に限られない」ケースがあります）。
+
+Earthdata で提供されるデータの主な出典は以下のとおり。
+
+NASA 自身の地球観測衛星ミッション
+
+MODIS（Terra / Aqua）
+
+VIIRS
+
+その他 Earth Observing System（EOS）系ミッション
+
+NASA が統合・再解析したモデルデータ
+
+MERRA-2（エアロゾル・大気再解析）
+
+NASA が公式に統合している他機関データ
+
+NOAA
+
+ESA
+
+JAXA 等
+
+Earthdata は「NASA データのみ」に限定されず、公式に統合された地球科学データの検索・配信基盤として機能している。
+
 参考：https://www.earthdata.nasa.gov/data/tools/earthdata-search
 
 参考：https://www.earthdata.nasa.gov/about/earthdata-cloud-evolution
 
-② 特色（他の地図系APIと比べて強い点）
+② 特色
 
-「道路地図」ではなく「観測（地球科学）」が強い
-Google Maps 等が強いのは POI/道路/ナビ/プレイス情報ですが、Earthdata は **降水・雲・エアロゾル・地表面温度・積雪・土壌水分・災害（煙・火災・洪水の兆候）**など、移動の遅延要因になり得る“環境側”のデータに強いです（衛星起源・再解析・各種プロダクト）。
+（他の地図系 API と比べて何が強いか）
 
-検索（メタデータ）と配信（画像/データ）の基盤が揃っている
-CMR がメタデータの中核で、Earthdata Search がそのUI/入口、配信はデータ提供元（DAAC）や画像配信（GIBS）などの仕組みに分かれています。
-参考：https://www.earthdata.nasa.gov/about/esdis/eosdis/cmr
+黄砂を「エアロゾル（Aerosol）」として直接扱える
 
-参考：https://www.earthdata.nasa.gov/data/tools/earthdata-search
+NASA Earthdata では、**黄砂はエアロゾルの一種（Dust）**として定義されている。
+これは単なる視覚表現ではなく、物理量として観測・解析されたデータである。
 
-タイル配信で“衛星画像レイヤ”を地図に重ねやすい（GIBS）
-GIBS は WMTS/WMS で全球画像を配信し、日付（time）次元を持つレイヤも提供されます。
+エアロゾル光学的厚さ（Aerosol Optical Depth / AOD）
+
+砂塵（Dust）成分
+
+煙・大気汚染物質との識別
+
+Google Maps 等の地図 API では扱えない、大気中粒子レベルの環境要因を直接取得できる点が最大の強みである。
+
+参考：https://www.earthdata.nasa.gov/learn/backgrounders/aerosols
+
+地図タイルとして直接重ねられる（GIBS）
+
+NASA GIBS を使うことで、黄砂・砂塵の分布を WMTS / WMS タイルとして取得できる。
+これは MapLibre、OpenLayers、Leaflet 等の地図ライブラリと親和性が高い。
+
+日付指定可能（time dimension）
+
+全球対応
+
+追加の前処理不要
+
+参考：https://nasa-gibs.github.io/gibs-api-docs/access-basics/
+
+数値データとして取得できる（API）
+
+NASA POWER API を利用すると、地点・期間指定でエアロゾル量（AOD）を数値として取得できる。
+これにより「見える黄砂」ではなく、判定・アラート・遅延要因分析に使える数値として扱える。
+
+参考：https://power.larc.nasa.gov/docs/services/api/
+
+③ 主要な API（endpoint）と公式ページ
+1. NASA GIBS（衛星画像・黄砂可視化）
+
+概要
+衛星観測画像・解析画像を WMTS / WMS タイルとして配信するサービス。
+
+主な用途
+
+黄砂（砂塵）の広がりを地図上に表示
+
+調査員・調査車の現在地と重ね合わせ
+
+エンドポイント
+
+https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/
+https://gibs.earthdata.nasa.gov/wms/epsg3857/best/wms.cgi
+
+
+公式ドキュメント
 参考：https://nasa-gibs.github.io/gibs-api-docs/access-basics/
 
 参考：https://www.earthdata.nasa.gov/news/blog/wmts-time-dimensions-restful-access
 
-③ 主要な API（endpoint）と公式ドキュメント（ページリンク）
+2. NASA POWER API（黄砂を数値で取得）
 
-ここでは「地図アプリに組み込みやすい/利用頻度が高い」代表格を列挙します。Earthdata は“単一API”ではなく、用途別に複数の公式サービスに分かれます。
+概要
+気象・太陽放射・エアロゾル等を REST API で取得する公式サービス。
 
-A. メタデータ検索（データ発見・絞り込み）
+黄砂関連で取得可能な代表パラメータ
 
-CMR Search API（検索 API）
+Aerosol Optical Depth（AOD）
 
-ベースURL：https://cmr.earthdata.nasa.gov/search/
+エンドポイント
 
-ドキュメント：https://cmr.earthdata.nasa.gov/search/site/docs/search/api
-参考：https://cmr.earthdata.nasa.gov/search
+https://power.larc.nasa.gov/api/temporal/daily/point
 
-参考：https://cmr.earthdata.nasa.gov/search/site/docs/search/api
 
-参考：https://www.earthdata.nasa.gov/about/esdis/eosdis/cmr
-
-参考：https://www.earthdata.nasa.gov/engage/open-data-services-software/earthdata-developer-portal/cmr-api
-
-B. 画像タイル／WMS（衛星画像や解析画像を地図に重畳）
-
-GIBS WMTS（タイル）
-
-エンドポイント例（Best Available）：https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/
-
-ドキュメント（Access Basics）：https://nasa-gibs.github.io/gibs-api-docs/access-basics/
-参考：https://nasa-gibs.github.io/gibs-api-docs/access-basics/
-
-GIBS WMS（地図クライアントでの利用）
-
-EPSG:3857 WMS 例：https://gibs.earthdata.nasa.gov/wms/epsg3857/best/wms.cgi
-
-GIS向け案内：https://nasa-gibs.github.io/gibs-api-docs/gis-usage/
-参考：https://nasa-gibs.github.io/gibs-api-docs/gis-usage/
-
-（補足）GIBS の time 次元（日時指定）
-
-解説：https://www.earthdata.nasa.gov/news/blog/wmts-time-dimensions-restful-access
-参考：https://www.earthdata.nasa.gov/news/blog/wmts-time-dimensions-restful-access
-
-C. 気象・気候パラメータ取得（ポイント/範囲の時系列など）
-
-NASA POWER API（Prediction Of Worldwide Energy Resources）
-
-API 概要（Docs）：https://power.larc.nasa.gov/docs/services/api/
-
-Getting Started：https://power.larc.nasa.gov/docs/tutorials/api-getting-started/
-
-チュートリアル（API Data Requests）：https://power.larc.nasa.gov/docs/tutorials/service-data-request/api/
+公式ドキュメント
 参考：https://power.larc.nasa.gov/docs/services/api/
 
 参考：https://power.larc.nasa.gov/docs/tutorials/api-getting-started/
 
-参考：https://power.larc.nasa.gov/docs/tutorials/service-data-request/api/
+3. CMR API（データ検索・取得）
 
-D. 認証（Earthdata Login）
+概要
+NASA Earthdata 全体のメタデータ検索基盤。
+MODIS、MERRA-2 等の黄砂関連データセットを検索・取得するための API。
 
-Earthdata Login（URS）
+エンドポイント
 
-入口：https://urs.earthdata.nasa.gov/
+https://cmr.earthdata.nasa.gov/search/
 
-ガイダンス：https://www.earthdata.nasa.gov/data/earthdata-login/guidance
-参考：https://urs.earthdata.nasa.gov/
+
+公式ドキュメント
+参考：https://cmr.earthdata.nasa.gov/search/site/docs/search/api
+
+参考：https://www.earthdata.nasa.gov/about/esdis/eosdis/cmr
+
+4. Earthdata Login（認証）
+
+概要
+一部データ取得時に必要な NASA 公式認証基盤。
+
+URL
+
+https://urs.earthdata.nasa.gov/
+
 
 参考：https://www.earthdata.nasa.gov/data/earthdata-login/guidance
 
-④ 料金体系（存在するプラン名と価格をそのまま全て記載）
+④ 料金体系
 
-料金プラン：存在しません（無料）
-Earthdata（EOSDIS）のデータは free of charge（無料） とされ、料金プランや有料ティアの価格表は提示されていません。
-参考：https://urs.earthdata.nasa.gov/
+（存在するプラン名と価格をそのまま全て記載）
+
+料金プラン：なし
+
+価格：無料（$0）
+
+NASA Earthdata（EOSDIS）のデータおよび API は、
+Free and Open Data Policy に基づき、料金プラン・有料ティアは存在しない。
 
 参考：https://www.earthdata.nasa.gov/about/earthdata-cloud-evolution
 
-（注）「一部は国際合意により制約される場合がある」旨は Earthdata Login 側に記載がありますが、価格プランとしての提示はありません。
 参考：https://urs.earthdata.nasa.gov/
+
+補足：地図アプリ視点での整理（黄砂）
+目的	使用する API
+黄砂の位置を地図表示	NASA GIBS（WMTS / WMS）
+黄砂の強さを数値判定	NASA POWER API（AOD）
+履歴・分析	MODIS / MERRA-2 + CMR
