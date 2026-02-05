@@ -1,0 +1,109 @@
+① 概要（運営主体／日本対応／出典＝データ取得元）
+
+運営主体（どこの国の会社か）
+NASA Earthdata は企業サービスではなく、**米国の政府機関 NASA（National Aeronautics and Space Administration）**が、地球科学データの公開・配布の入口として提供しているポータル／データ基盤です。
+参考：https://www.earthdata.nasa.gov/
+
+日本の地図は対応しているか
+Earthdata は「地図（道路地図）」というより、**全球の衛星観測・地球科学データ（画像・グリッド・観測値・再解析など）**を提供する枠組みです。NASA の「フル＆オープン」ポリシーの下で、世界中の誰でもアクセス可能とされているため、日本域（日本の上空・周辺海域を含む）も対象に利用できます。
+参考：https://www.earthdata.nasa.gov/about/earthdata-cloud-evolution
+
+出典（どこからデータ取得しているのか）
+基本は NASA の地球観測ミッション由来のデータ（衛星・センサー・処理アルゴリズム・メタデータ等）です。加えて Earthdata Search / CMR の検索対象には、NOAA・ESA・JAXA・ISRO などのデータも含み得ることが明記されています（=「Earthdata を通じて見つかるデータの出典が NASA に限られない」ケースがあります）。
+参考：https://www.earthdata.nasa.gov/data/tools/earthdata-search
+
+参考：https://www.earthdata.nasa.gov/about/earthdata-cloud-evolution
+
+② 特色（他の地図系APIと比べて強い点）
+
+「道路地図」ではなく「観測（地球科学）」が強い
+Google Maps 等が強いのは POI/道路/ナビ/プレイス情報ですが、Earthdata は **降水・雲・エアロゾル・地表面温度・積雪・土壌水分・災害（煙・火災・洪水の兆候）**など、移動の遅延要因になり得る“環境側”のデータに強いです（衛星起源・再解析・各種プロダクト）。
+
+検索（メタデータ）と配信（画像/データ）の基盤が揃っている
+CMR がメタデータの中核で、Earthdata Search がそのUI/入口、配信はデータ提供元（DAAC）や画像配信（GIBS）などの仕組みに分かれています。
+参考：https://www.earthdata.nasa.gov/about/esdis/eosdis/cmr
+
+参考：https://www.earthdata.nasa.gov/data/tools/earthdata-search
+
+タイル配信で“衛星画像レイヤ”を地図に重ねやすい（GIBS）
+GIBS は WMTS/WMS で全球画像を配信し、日付（time）次元を持つレイヤも提供されます。
+参考：https://nasa-gibs.github.io/gibs-api-docs/access-basics/
+
+参考：https://www.earthdata.nasa.gov/news/blog/wmts-time-dimensions-restful-access
+
+③ 主要な API（endpoint）と公式ドキュメント（ページリンク）
+
+ここでは「地図アプリに組み込みやすい/利用頻度が高い」代表格を列挙します。Earthdata は“単一API”ではなく、用途別に複数の公式サービスに分かれます。
+
+A. メタデータ検索（データ発見・絞り込み）
+
+CMR Search API（検索 API）
+
+ベースURL：https://cmr.earthdata.nasa.gov/search/
+
+ドキュメント：https://cmr.earthdata.nasa.gov/search/site/docs/search/api
+参考：https://cmr.earthdata.nasa.gov/search
+
+参考：https://cmr.earthdata.nasa.gov/search/site/docs/search/api
+
+参考：https://www.earthdata.nasa.gov/about/esdis/eosdis/cmr
+
+参考：https://www.earthdata.nasa.gov/engage/open-data-services-software/earthdata-developer-portal/cmr-api
+
+B. 画像タイル／WMS（衛星画像や解析画像を地図に重畳）
+
+GIBS WMTS（タイル）
+
+エンドポイント例（Best Available）：https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/
+
+ドキュメント（Access Basics）：https://nasa-gibs.github.io/gibs-api-docs/access-basics/
+参考：https://nasa-gibs.github.io/gibs-api-docs/access-basics/
+
+GIBS WMS（地図クライアントでの利用）
+
+EPSG:3857 WMS 例：https://gibs.earthdata.nasa.gov/wms/epsg3857/best/wms.cgi
+
+GIS向け案内：https://nasa-gibs.github.io/gibs-api-docs/gis-usage/
+参考：https://nasa-gibs.github.io/gibs-api-docs/gis-usage/
+
+（補足）GIBS の time 次元（日時指定）
+
+解説：https://www.earthdata.nasa.gov/news/blog/wmts-time-dimensions-restful-access
+参考：https://www.earthdata.nasa.gov/news/blog/wmts-time-dimensions-restful-access
+
+C. 気象・気候パラメータ取得（ポイント/範囲の時系列など）
+
+NASA POWER API（Prediction Of Worldwide Energy Resources）
+
+API 概要（Docs）：https://power.larc.nasa.gov/docs/services/api/
+
+Getting Started：https://power.larc.nasa.gov/docs/tutorials/api-getting-started/
+
+チュートリアル（API Data Requests）：https://power.larc.nasa.gov/docs/tutorials/service-data-request/api/
+参考：https://power.larc.nasa.gov/docs/services/api/
+
+参考：https://power.larc.nasa.gov/docs/tutorials/api-getting-started/
+
+参考：https://power.larc.nasa.gov/docs/tutorials/service-data-request/api/
+
+D. 認証（Earthdata Login）
+
+Earthdata Login（URS）
+
+入口：https://urs.earthdata.nasa.gov/
+
+ガイダンス：https://www.earthdata.nasa.gov/data/earthdata-login/guidance
+参考：https://urs.earthdata.nasa.gov/
+
+参考：https://www.earthdata.nasa.gov/data/earthdata-login/guidance
+
+④ 料金体系（存在するプラン名と価格をそのまま全て記載）
+
+料金プラン：存在しません（無料）
+Earthdata（EOSDIS）のデータは free of charge（無料） とされ、料金プランや有料ティアの価格表は提示されていません。
+参考：https://urs.earthdata.nasa.gov/
+
+参考：https://www.earthdata.nasa.gov/about/earthdata-cloud-evolution
+
+（注）「一部は国際合意により制約される場合がある」旨は Earthdata Login 側に記載がありますが、価格プランとしての提示はありません。
+参考：https://urs.earthdata.nasa.gov/

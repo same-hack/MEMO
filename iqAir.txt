@@ -1,0 +1,105 @@
+AirVisual（IQAir）API について、指定の観点で一次ソースを根拠に整理したものです。
+
+① 概要（会社の国／日本対応／出典＝データ取得元）
+会社はどこの国か
+
+**IQAir はスイスの企業（IQAir AG）**です。
+参考： https://www.iqair.com/legal/terms-conditions
+
+参考： https://www.iqair.com/facility/switzerland/st-gallen/steinach/iqair-swiss-office
+
+日本の地図（日本の地点）に対応しているか
+
+IQAir の公開ページで Tokyo, Japan など日本の都市・ステーションが表示され、データ提供（Stations / contributors）が成立しています。
+参考： https://www.iqair.com/japan/tokyo
+
+参考： https://www.iqair.com/jp/japan/tokyo/tokyo
+
+出典（どこからデータ取得しているのか）
+
+IQAir（AirVisual）は単一ソースではなく、複数種の入力データを統合します。
+
+地上の大気質観測ステーション（ground-based monitoring stations）
+
+衛星ベースの大気質データ（satellite-based air quality data）
+
+規制当局等の大気質モニターデータ（regulatory air quality monitor data）
+
+リアルタイムの気象・気候データ（real-time weather & climate data）
+参考： https://www.iqair.com/air-quality-monitors/api
+
+また、IQAir AirVisual プラットフォームは 政府・個人・NGO 等の大気質データを集約・検証して提供する形を取ります。
+参考： https://solarimpulse.com/companies/iqair
+
+（日本側の例として、東京のマップでは AEROS（Atmospheric Environmental Regional Observation System） 等の提供者名が表示されます。）
+参考： https://www.iqair.com/jp/air-quality-map/japan/tokyo/tokyo
+
+② 特色（他の地図系APIと比べて何が強いか）
+
+大気質（AQI・汚染物質濃度）と気象データを同一プラットフォームで統合して返す（入力として “air quality + weather/climate” を統合し、出力として API 提供）。
+参考： https://www.iqair.com/air-quality-monitors/api
+
+参考： https://api-docs.iqair.com/
+
+**機械学習による検証・較正（reference data に基づく validation/calibration）**を前提にデータ品質を高める設計。
+参考： https://www.iqair.com/air-quality-monitors/api
+
+AQI 指標を US AQI と Chinese AQI の2系統で返す（API仕様として明記）。
+参考： https://api-docs.iqair.com/
+
+③ 主要API（endpoint）一覧＋公式ページリンク
+
+公式ドキュメントは https://api-docs.iqair.com/
+ です（以下、そこで提示されているエンドポイントURLテンプレートを列挙）。
+
+地域の対応範囲をたどる系
+
+List supported countries
+http://api.airvisual.com/v2/countries?key={{YOUR_API_KEY}}
+参考： https://api-docs.iqair.com/
+
+List supported states in a country
+http://api.airvisual.com/v2/states?country={{COUNTRY_NAME}}&key={{YOUR_API_KEY}}
+参考： https://api-docs.iqair.com/
+
+List supported cities in a state
+http://api.airvisual.com/v2/cities?state={{STATE_NAME}}&country={{COUNTRY_NAME}}&key={{YOUR_API_KEY}}
+参考： https://api-docs.iqair.com/
+
+大気質・気象データ取得系（都市／ステーション）
+
+Get specified city data
+（都市指定でデータ取得。APIプランにより返却内容が変わる旨がドキュメントに明記）
+参考： https://api-docs.iqair.com/
+
+Get nearest city data (GPS coordinates)
+http://api.airvisual.com/v2/nearest_city?lat={{LATITUDE}}&lon={{LONGITUDE}}&key={{YOUR_API_KEY}}
+参考： https://api-docs.iqair.com/
+
+Get specified station data
+http://api.airvisual.com/v2/station?station=...
+参考： https://api-docs.iqair.com/
+
+ランキング系
+
+Get global city ranking
+http://api.airvisual.com/v2/city_ranking?key={{YOUR_API_KEY}}&sort=&country={{COUNTRY_NAME}}
+参考： https://api-docs.iqair.com/
+
+近傍ステーション系（注意）
+
+ドキュメントに nearest_station エンドポイントの追加が示されています（Startup API plan and above）。ただし、今回取得できたドキュメント断片では URLテンプレート本体を確認できませんでした（公式ページ自体は同一）。
+参考： https://api-docs.iqair.com/
+
+④ 料金体系（プラン名と価格をそのまま全て記載／URL必須）
+
+Community API plan：FREE
+参考： https://www.iqair.com/measure-air-quality/api
+
+Startup API plan：$399 / month、$3999 / year
+参考： https://www.iqair.com/measure-air-quality/api
+
+Enterprise API plan：$999 / month、$9999 / year
+参考： https://www.iqair.com/measure-air-quality/api
+
+必要なら、上の endpoint ごとに「最小リクエスト例（curl）」と「レスポンスで取れる主要フィールド（AQI、主要汚染物質、気象項目など）」も一次ソースに当たりながら同じ形式で整理します。

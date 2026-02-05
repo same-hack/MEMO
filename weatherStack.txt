@@ -1,0 +1,123 @@
+① 概要（運営主体／日本対応／出典＝データ取得元）
+
+運営主体（どこの国の会社か）
+Weatherstack は apilayer が構築・運営しているプロダクトです。apilayer は **英国（ロンドン）およびオーストリア（ウィーン）**を拠点としています。
+参考：https://weatherstack.com/faq
+
+日本の地図は対応しているか
+Weatherstack は地図タイル（地図画像）を配信するAPIではなく、指定地点の気象データを返すAPIです。
+ただし、日本を含む任意地点を query で指定して取得できます（都市名、緯度経度、IP 等で指定可能）。
+参考：https://weatherstack.com/documentation
+
+出典（どこからデータ取得しているのか）
+Weatherstack は 世界の大規模な気象観測所および気象データ提供者から、気象データをライセンス取得して提供しています。
+参考：https://weatherstack.com/faq
+
+参考：https://weatherstack.com/pricing
+
+② 特色（他の地図系APIと比べて何が強いか）
+
+HTTP(S)で叩けるREST/JSON形式で、地図（MapLibre 等）上の任意地点に対して「天気を付与」しやすい（query で都市名・座標・IP指定、複数地点の一括指定も可能）。
+参考：https://weatherstack.com/documentation
+
+提供機能のまとまりが明確（現況／過去／予報／海上（マリン）／ロケーション検索）で、用途別にエンドポイントが分かれている。
+参考：https://docs.apilayer.com/weatherstack/docs/api-documentation
+
+参考：https://weatherstack.com/documentation
+
+40言語、**Bulk（複数地点一括）**など、表示・運用面の機能が料金プランに紐づいて提供される。
+参考：https://weatherstack.com/pricing
+
+③ 主要なAPI（endpoint）リスト＋ページリンク
+
+ベースURL例：https://api.weatherstack.com
+
+Current Weather
+
+Endpoint：/current
+
+ページリンク：ドキュメント内「Current Weather」セクション（同一ページ）
+
+参考（ドキュメント）：https://weatherstack.com/documentation
+
+参考（エンドポイント例）：https://api.weatherstack.com/current
+
+Historical Weather
+
+Endpoint：/historical（単日・期間）
+
+ページリンク：ドキュメント内「Historical Weather」セクション（同一ページ）
+
+参考：https://weatherstack.com/documentation
+
+参考（エンドポイント例）：https://api.weatherstack.com/historical
+
+Weather Forecast
+
+Endpoint：/forecast
+
+ページリンク：ドキュメント内「Weather Forecast」セクション（同一ページ）
+
+参考：https://weatherstack.com/documentation
+
+参考（エンドポイント例）：https://api.weatherstack.com/forecast
+
+Marine Weather
+
+Endpoint：/marine
+
+ページリンク：ドキュメント内「Marine Weather」セクション（同一ページ）
+
+参考：https://weatherstack.com/documentation
+
+参考（エンドポイント例）：https://api.weatherstack.com/marine
+
+Historical Marine Weather
+
+Endpoint：/marine（履歴取得はドキュメント「Historical Marine Weather」セクションに記載）
+
+参考：https://weatherstack.com/documentation
+
+Location Lookup / Autocomplete
+
+Endpoint：/autocomplete
+
+ページリンク：ドキュメント内「Location Lookup/Autocomplete」セクション（同一ページ）
+
+参考：https://weatherstack.com/documentation
+
+参考（エンドポイント例）：https://api.weatherstack.com/autocomplete
+
+補足（apilayer側ドキュメントのエンドポイント表）
+
+apilayerのドキュメントでは、ロケーション系を /locations として要約しています。
+
+参考：https://docs.apilayer.com/weatherstack/docs/api-documentation
+
+④ 料金体系（プラン名と価格をそのまま全て記載、URL必須）
+
+Free：$0 per month
+
+Standard：$9.99 per month or $8.99 if billed yearly
+
+Professional：$49.99 per month or $43.99 if billed yearly
+
+Business：$99.99 per month or $84.99 if billed yearly
+
+Enterprise：Custom Pricing Tailored to your needs
+
+参考：https://weatherstack.com/pricing
+
+（同ページ／FAQに掲載の追加料金）
+
+Platinum Support（Standard Plan）：$479.88 billed annually
+
+Platinum Support（Professional Plan）：$599.88 billed annually
+
+Platinum Support（Business Plan）：$719.88 billed annually
+
+Platinum Support（Enterprise Plan）：Custom pricing billed annually
+
+参考：https://weatherstack.com/pricing
+
+参考：https://weatherstack.com/faq
