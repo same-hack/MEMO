@@ -1,0 +1,189 @@
+Open-Meteo 概要
+
+Open-Meteo は、世界中のオープンな数値気象データを統合し、
+緯度・経度指定で天候情報を取得できる オープンソースの気象 API サービス である。
+
+運営主体はスイス所在の法人 Open-Meteo GmbH。
+利用規約ではスイス法準拠が明記されており、欧州圏を拠点としたサービスであることが確認できる。
+
+Open-Meteo は地図タイルを提供するサービスではなく、
+任意地点（緯度・経度）に対する天候データを JSON で返す API であるため、
+MapLibre / Google Maps / HERE などの地図上に 天候情報をオーバーレイ表示 する用途に向く。
+
+日本国内についてもグローバル予報モデルで対応しているほか、
+気象庁（JMA）の数値予報モデルを利用する日本向け API が提供されている。
+
+参考：https://open-meteo.com/en/about
+
+参考：https://open-meteo.com/en/terms
+
+参考：https://www.dnb.com/business-directory/company-profiles.openmeteo_gmbh.371de5190153c6a7dd7fb0632d50b7d1.html
+
+参考：https://open-meteo.com/en/docs
+
+参考：https://open-meteo.com/en/docs/jma-api
+
+出典（データはどこから取得しているか）
+
+Open-Meteo は独自観測網を持たず、
+各国の気象機関・国際機関が公開しているオープンデータを統合・再配信 している。
+
+主な出典は以下の通り。
+
+数値予報モデル
+
+ECMWF（欧州中期予報センター）
+
+DWD（ドイツ気象局）
+
+NOAA / NCEP（米国）
+
+CMC（カナダ）
+
+Météo-France
+
+MeteoSwiss
+
+MET Norway
+
+JMA（日本：気象庁）
+
+大気質
+
+Copernicus Atmosphere Monitoring Service（CAMS）
+
+洪水・河川流量
+
+GloFAS（Copernicus Emergency Management）
+
+標高
+
+Copernicus DEM（GLO-90）
+
+Open-Meteo はこれらのデータソースとライセンス条件を公式に明示しており、
+「どの機関のデータを使っているか」を説明しやすい点が特徴である。
+
+参考：https://open-meteo.com/en/licence
+
+参考：https://open-meteo.com/en/about
+
+参考：https://open-meteo.com/en/docs/flood-api
+
+参考：https://open-meteo.com/en/docs/elevation-api
+
+特色（他の天候系 API と比べた強み）
+地域に応じたモデル自動選択
+
+Open-Meteo は単一モデル固定ではなく、
+地域ごとに精度の高い数値予報モデルを組み合わせて提供する設計 を採用している。
+
+これにより、日本では JMA、欧州では ECMWF 系といった形で
+地域特性を考慮した天候データを取得できる。
+
+参考：https://open-meteo.com/en/docs
+
+APIキー不要（非商用）・オープンソース
+
+非商用利用では APIキー不要 で即利用可能。
+さらにバックエンド実装は GitHub 上で オープンソース公開 されており、
+データ処理のブラックボックス性が低い。
+
+公共用途・調査用途・研究用途との親和性が高い。
+
+参考：https://open-meteo.com/
+
+参考：https://github.com/open-meteo/open-meteo
+
+移動体×地図可視化に向いた設計
+
+緯度・経度指定
+
+時系列（hourly / daily / current）
+
+timezone=auto による自動タイムゾーン補正
+
+調査員や調査車の GPS 位置と組み合わせて
+地点ごとの天候をリアルタイム／準リアルタイムに可視化 しやすい。
+
+参考：https://open-meteo.com/en/docs
+
+料金体系
+無償（非商用）
+
+非商用用途のみ利用可能
+
+レート制限あり（分・時間・月単位）
+
+APIキー不要
+
+参考：https://open-meteo.com/en/terms
+
+商用プラン
+
+商用利用は 有償サブスクリプション必須
+
+APIキー付き専用エンドポイントを提供
+
+SLA・高レート制限・優先処理あり
+
+※具体的な月額金額は Pricing ページおよび契約フロー内で提示される形式。
+
+参考：https://open-meteo.com/en/pricing
+
+参考：https://openmeteo.substack.com/p/api-subscriptions-for-commercial
+
+主要な API（endpoint）一覧
+天気予報（現在・将来）
+
+/v1/forecast
+任意地点の現在・時間別・日別天候を取得
+
+参考：https://open-meteo.com/en/docs
+
+過去気象（再解析）
+
+/v1/archive
+過去の実績気象データ取得
+
+参考：https://open-meteo.com/en/docs/historical-weather-api
+
+大気質
+
+/v1/air-quality
+PM2.5 / PM10 / NO2 / O3 など
+
+参考：https://open-meteo.com/en/docs/air-quality-api
+
+海象
+
+/v1/marine
+波高・潮位・海上風など
+
+参考：https://open-meteo.com/en/docs/marine-weather-api
+
+ジオコーディング
+
+/v1/search
+地名 → 緯度経度変換
+
+参考：https://open-meteo.com/en/docs/geocoding-api
+
+標高
+
+/v1/elevation
+Copernicus DEM に基づく標高取得
+
+参考：https://open-meteo.com/en/docs/elevation-api
+
+洪水・河川流量
+
+/v1/flood
+GloFAS に基づく洪水予測
+
+参考：https://open-meteo.com/en/docs/flood-api
+
+日本向け（気象庁モデル）
+
+/v1/jma
+
+参考：https://open-meteo.com/en/docs/jma-api
