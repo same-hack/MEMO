@@ -1,0 +1,126 @@
+WeatherAPI.com（Weather API）
+① 概要
+
+提供元（会社・国）
+WeatherAPI.com は、OPLAO FZCO（アラブ首長国連邦・ドバイ） により運営されている気象データ提供サービスです。REST 形式の API を通じて、気象および関連データを提供しています。
+
+日本対応
+WeatherAPI.com は 全世界を対象としており、日本国内の地点についても都市名、郵便番号、緯度・経度指定によるデータ取得が可能です。
+
+出典（データ取得元）
+WeatherAPI.com が提供する気象データは、世界中の公的および民間の気象観測ステーション、ならびに複数のデータプロバイダから取得された観測データを基にしています。
+リアルタイムデータは観測データベースから提供され、予報データは複数の気象モデルと機械学習処理を組み合わせて生成されています。
+
+参考：URL
+https://www.weatherapi.com/
+
+https://www.weatherapi.com/about.aspx
+
+② 特色（他の地図系・気象系 API と比べての強み）
+
+WeatherAPI.com は、現在の天気、予報、過去データに加え、天文情報、タイムゾーン、大気質、気象アラート、位置検索などを 単一の API 群として提供しています。
+レスポンス形式は JSON および XML に対応しており、公式ドキュメントおよび API Explorer により仕様確認が可能です。
+また、複数地点をまとめて取得できる Bulk API が提供されています。
+
+参考：URL
+https://www.weatherapi.com/docs/
+
+https://www.weatherapi.com/api-explorer.aspx
+
+③ 主要な API（公式ドキュメント記載の API 名）
+Current weather API
+
+指定した地点の現在の天気（リアルタイム天候）を取得する API です。
+公式ドキュメント原文：
+
+Current weather or realtime weather API method allows a user to get up to date current weather information in json and xml.
+
+
+参考：URL
+https://www.weatherapi.com/docs/
+
+Forecast API
+
+指定地点の天気予報データを取得する API です。
+
+参考：URL
+https://www.weatherapi.com/docs/
+
+History API
+
+指定した日付の過去の天候データを取得する API です。
+
+参考：URL
+https://www.weatherapi.com/docs/
+
+Future API
+
+将来日の天候データを取得する API です。
+
+参考：URL
+https://www.weatherapi.com/docs/
+
+Search API
+
+地名や都市名を指定して地点情報を検索する API です。
+
+参考：URL
+https://www.weatherapi.com/docs/
+
+Astronomy API
+
+日の出・日の入り、月の出・月の入り、月相などの天文情報を取得する API です。
+
+参考：URL
+https://www.weatherapi.com/docs/
+
+Time Zone API
+
+指定地点のタイムゾーンおよび現地時刻情報を取得する API です。
+
+参考：URL
+https://www.weatherapi.com/docs/
+
+Marine API
+
+海上の天候・波・風などの海象データを取得する API です。
+
+参考：URL
+https://www.weatherapi.com/docs/
+
+Air Quality / Weather Alerts
+
+大気質情報および気象警報・注意報を取得する機能です。
+
+参考：URL
+https://www.weatherapi.com/docs/
+
+④ 料金体系（公式記載内容・金額つき）
+
+WeatherAPI.com の公式料金ページに記載されている 月額料金 は以下のとおりです。
+
+Free
+
+$0 / month
+
+Starter
+
+$7 / month
+
+Pro+
+
+$25 / month
+
+Business
+
+$35 / month
+
+Enterprise
+
+価格非公開（要問い合わせ）
+
+料金ページには、各プランについて API コール数、利用可能 API、予報日数、履歴・将来データ対応範囲、リクエスト制限などの 比較表が掲載されています。
+年額プランの選択可否についても公式ページに記載されています。
+
+参考：URL
+https://www.weatherapi.com/pricing.aspx
