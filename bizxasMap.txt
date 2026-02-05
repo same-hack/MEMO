@@ -1,0 +1,96 @@
+① 概要（できること／会社／日本対応／出典）
+どんな事ができるのか
+
+BizXaaS MaP® 人流分析は、建物単位・道路単位の人数を、過去〜リアルタイム〜未来の範囲で 分析・予測し、意思決定を支援するサービスです。
+また、絶対人数推計、性・年代・居住地割合などの属性、今後の人流予測をリアルタイムに把握できると説明されています。
+参考：https://www.nttdata.com/jp/ja/lineup/bizxaas_map/jinryu/
+
+参考：https://www.nttdata.com/global/ja/news/release/2021/102601/
+
+どこの国の会社か
+
+提供会社は **株式会社NTTデータ（日本）**です。
+参考：https://www.nttdata.com/global/ja/news/release/2021/102601/
+
+日本の地図は対応しているか
+
+一次ソースでは、日本全国のリアルタイム人口データ配信（「モバイル空間統計®人口分布統計（リアルタイム版）」）について **「日本全国」**と明記されています。
+また、人流分析サービス自体もNTTデータ（日本サイト）で国内向けに提供されており、日本の地図上での活用（地図上で指定範囲の集計・分析等）を前提に説明されています。
+参考：https://www.nttdata.com/global/ja/news/release/2021/011500/
+
+参考：https://www.nttdata.com/jp/ja/lineup/bizxaas_map/jinryu/
+
+出典（どこからデータ取得しているのか）
+
+一次ソースでは、人流分析は以下を複合的に処理すると明記されています。
+
+人口分布統計（「モバイル空間統計 国内人口分布統計（リアルタイム版）」）
+
+複数の人流プローブデータ（例：リアルタイムGPSプローブ、カープローブ）
+
+各種地理空間データ
+
+さらに、リリース文では具体例として unerry「Beacon Bank®」リアルタイムGPSプローブ、カープローブを挙げています。
+参考：https://www.nttdata.com/global/ja/news/release/2021/102601/
+
+参考：https://www.nttdata.com/jp/ja/lineup/bizxaas_map/jinryu/
+
+② 特色（他の地図系APIと比べて何が強いか）
+地図系API（地図表示・経路・ナビ）との差
+
+本サービスは「地図そのもの」を提供するAPIではなく、地図上に重畳して使う“人流（人数・属性・予測）”の分析結果を提供する位置づけです（道路・施設単位の分析・予測）。
+参考：https://www.nttdata.com/jp/ja/lineup/bizxaas_map/jinryu/
+
+強み（一次ソースで根拠があるもの）
+
+道路・施設単位で、絶対人数と属性が分かる（モバイル空間統計の人口分布統計＋人流プローブ＋地理空間データを複合処理）
+参考：https://www.nttdata.com/jp/ja/lineup/bizxaas_map/jinryu/
+
+**人流プローブ単独では難しい「ピンポイント人数推計」**を可能にした（モバイル空間統計の人口統計と推計技術、人流プローブを組み合わせる）
+参考：https://www.nttdata.com/global/ja/news/release/2021/102601/
+
+参考：https://www.nttdata.com/jp/ja/lineup/bizxaas_map/jinryu/
+
+リアルタイム現況＋将来予測（AI予測技術等を用い、リアルタイム変化を反映した予測をうたう）
+参考：https://www.nttdata.com/global/ja/news/release/2021/102601/
+
+③ 主要なAPIのリストと用途、実際の細かなページリンク
+結論
+
+API連携は可能だが、公開されたAPI仕様（エンドポイント一覧・パラメータ・OpenAPI等）のページは無い。
+参考：https://www.nttdata.com/jp/ja/lineup/bizxaas_map/jinryu/
+
+参考：https://www.nttdata.com/global/ja/news/release/2021/102601/
+
+公開一次ソースで確認できる「API」に関する範囲
+
+API連携（既存システムへの追加）
+用途：既存システムに人流分析（または人口データ集計・分析機能）を追加するための連携手段
+参考：https://www.nttdata.com/jp/ja/lineup/bizxaas_map/jinryu/
+
+参考：https://www.nttdata.com/global/ja/news/release/2021/102601/
+
+参考：https://www.nttdata.com/global/ja/news/release/2021/011500/
+
+「細かなAPIページリンク」について（指示に対する正確な回答）
+
+エンドポイント一覧ページ：無い（公開されていない）
+
+契約者向けページ：有る（ただし認証が必要で、未契約では参照できない）
+参考：https://www.nttdata.com/jp/ja/lineup/bizxaas_map/jinryu/
+
+参考：https://madore.glbs.jp/customer/index.html
+ （未認証アクセスで401）
+
+※上記の通り、公開ソースでは「API連携できる」事実までは確認できますが、APIの“主要リスト（エンドポイント名等）”を一次ソースで提示できる状態ではありません。
+
+④ 料金体系（プラン名と価格をそのまま全て／URL必須）
+結論
+
+無い（公式ページ上に、プラン名と価格の一覧が公開されていない）
+
+NTTデータの人流分析ページに 価格・プラン名の記載は無い。
+参考：https://www.nttdata.com/jp/ja/lineup/bizxaas_map/jinryu/
+
+関連案内では **「料金プランの詳細はお問い合わせ」**とされており、公開一覧としては提示されていない。
+参考：https://www.dcm-im.com/news/172/
