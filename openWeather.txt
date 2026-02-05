@@ -1,183 +1,175 @@
-① 概要（会社 / 日本対応 / 出典）
-会社はどこの国か
+① 概要（どこの国の会社か／日本の地図は対応しているか／出典＝どこからデータ取得しているのか）
+どこの国の会社か
 
-OpenWeather は「ロンドン（英国）」に本社を置く、と公式サイト上で明記されています。
-参考：URL（会社所在地・Company/Offices）
+OpenWeather（OpenWeather Ltd.）は英国企業で、英国の会社登記（Companies House）に **登録住所（ロンドン）**が掲載されています。
+参考：URL
+https://find-and-update.company-information.service.gov.uk/company/11047846
 
 日本の地図（=日本の地点）に対応しているか
 
-OpenWeather の各APIは基本的に 緯度・経度（lat/lon）で世界中の地点に対して取得する設計です。したがって 日本の地点（日本の地図上での利用）も対応です。
-例：One Call API 3.0 は lat lon を必須パラメータとして API 呼び出しを定義しています。
-参考：URL（One Call 3.0 呼び出し仕様）
+OpenWeather の主要APIは基本的に 緯度経度（lat/lon）指定で取得する設計で、地理的に日本が除外されている旨はありません。例えば One Call API 3.0 は lat/lon 前提の仕様です。
+参考：URL
+https://docs.openweather.co.uk/api/one-call-3
 
 出典（どこからデータ取得しているのか）
 
-OpenWeather は、衛星・レーダー・地上観測（気象局/空港のMETAR等）・数値予報モデルなど複数ソースを統合し、独自処理（品質管理や補正等）を経て提供する旨を説明しています。
-参考：URL（Accuracy and quality of weather data / データソースの説明）
-
-また「政府（国の）警報（weather alerts）」については、各国の国家機関等から収集し、統一フォーマットで提供すると説明されています。
-参考：URL（Global Weather Alerts の説明）
-
-② 特色（他の“地図系API/地図アプリ統合”観点で何が強いか）
-1) “まとめ取り（One Call）” が強い：地図UIで必要な気象要素を1回の呼び出しで束ねやすい
-
-OpenWeather の One Call API 3.0 は、現在・分単位・時間別・日別・警報・（別エンドポイントで）過去などをまとめて扱う「プロダクト概念」として整理されています。
-→ 地図の“現在地/進行ルート/到着見込み時刻”に合わせて、画面で必要な粒度を1レスポンスで揃えやすいのがポイントです。
-参考：URL（One Call 3.0 のコンセプト/含まれるエンドポイント）
-
-2) 地図に載せやすい“タイル”が公式で揃う：Weather Maps 2.0（タイル）をそのままMapLibre等へ重畳
-
-Weather Maps 2.0 は URL形式で取得できるタイル/レイヤーとして提供され、複数の天気レイヤーを地図に重ねる用途に寄せたAPIです。
-参考：URL（Weather maps 2.0 docs）
-
-3) “移動”に寄せたAPIがある：Road Risk（ルート上の点列で、時刻つき気象＋警報）
-
-Road Risk API は ルートを点列（lat, lon, time）として与え、各点の気象と警報を返すコンセプトです。
-調査車のルート監視・到着予測時刻に合わせた気象重畳に、考え方としてフィットします（ただし後述の通り地域制限があります）。
-参考：URL（Road Risk API concept）
-
-③ 主要なAPI（endpoint）一覧 + 公式ページリンク + 日本対応（APIごと）
-
-ここでは **「地図上での移動監視×天候表示」**で使われがちなものを優先しています。
-
-One Call API 3.0（まとめ取り）
-
-エンドポイント（例）
-
-https://api.openweathermap.org/data/3.0/onecall（current/minutely/hourly/daily/alerts をまとめて取得）
+OpenWeather の 予報・統合気象データは、公式ドキュメントで proprietary OpenWeather Model（独自の OpenWeather Model）に基づくと明記されています。
 参考：URL
+https://docs.openweather.co.uk/api/one-call-3
 
-公式ドキュメント
+また **国の警報（National alerts）**については、Road Risk API の説明で「national alerts」「national agency name」等を返すことが書かれ、さらに「警報ソース一覧（List of national weather warning sources）」がドキュメント内にあります。
 参考：URL
+https://docs.openweather.co.uk/api/road-risk
 
-日本対応
+② 特色（他の地図系APIと比べて何が強いか）
+特色1：天気系の複数要素を「1回の取得」にまとめる One Call API がある
 
-対応（日本のlat/lonで利用可）
+One Call API 3.0 は、現在・分単位・時間別・日別予報＋政府（国）の気象警報までを「One Call API 3.0 contains 5 endpoints」として整理し、まとめて扱えるプロダクトとして説明されています。
+（地図アプリ側では、調査員/車の現在地（lat/lon）に対して「今〜近未来〜数日＋警報」を一貫した形で取り回しやすい、という意味で“まとめ取り”が強みになります。）
 
-警報（alerts）は“日本の発表元”が含まれる：OpenWeatherの警報ソース一覧に Japan / Japan Meteorological Business Support Center が明記されています。
 参考：URL
+https://docs.openweather.co.uk/api/one-call-3
 
-Global Weather Alerts（プッシュ通知型の警報配信）
+特色2：地図に重ねやすい “Weather maps 2.0” を公式提供（タイル/レイヤー）
 
-公式ページ（プロダクト）
+Weather maps 2.0 は URL 形式で地図レイヤー（15レイヤー）を取得でき、Leaflet/OpenLayers 等でレイヤー表示する前提の説明が明記されています。
 参考：URL
+https://docs.openweather.co.uk/api/weather-map-2
 
-公式ドキュメント（Push Weather Alerts）
+特色3：“移動（ルート）”に寄せた Road Risk API がある（ただし日本は一部機能非対応）
+
+Road Risk API は ルートを「緯度・経度・時刻の点列」として渡し、各点の気象＋国の警報を返すコンセプトです。
+加えて、路面温度・ブラックアイス（路面状態）は US/EU のみ提供と明記されているため、ここは日本では非対応です。
 参考：URL
+https://docs.openweather.co.uk/api/road-risk
 
-日本対応
+③ 主要なAPI（endpoint）リスト＋公式ページリンク（日本対応の可否をAPIごとに記載）
 
-対応（“多数の国家警報システムから収集”として世界対応をうたう）
+「日本対応」は (A) 日本の座標で利用できるか と (B) 一部機能が地域限定か を分けて書きます。
 
-ただし、実運用上は「その時点で日本側の警報が提供されているか」に依存します（OpenWeather側も“機関が提供を停止する可能性”に言及）。
+1) One Call API 3.0
+
+公式ドキュメント（エンドポイント群・機能）
+
+日本対応：
+
+(A) 対応（lat/lon 指定のため、日本の座標で利用可能）
+
+(B) 地域限定の明記なし（少なくとも仕様上、国限定の除外記載は確認できません）
+
 参考：URL
+https://docs.openweather.co.uk/api/one-call-3
 
-Road Risk API（ルート上の点列＋時刻で、気象と警報）
+https://openweathermap.org/api/one-call-3
 
-公式ドキュメント
+2) Road Risk API
+
+エンドポイント（Method/URL が明記）
+
+POST https://api.openweathermap.org/data/2.5/roadrisk?appid={API key}
+
+日本対応：
+
+(A) 対応（基本の気象＋警報）：各点で「air temperature, wind, precipitation, dew point」「national alerts」を返す
+
+(B) 日本は一部非対応：
+
+路面温度（road surface temperature）
+
+ブラックアイス路面状態（black ice road state）
+は US/EU territories のみと明記 → 日本は非対応
+
 参考：URL
+https://docs.openweather.co.uk/api/road-risk
 
-日本対応
+https://openweathermap.org/api/road-risk
 
-一部対応
+3) Weather maps 2.0
 
-ルート上の各点で返す基本要素（例：気温、風、降水、露点、警報）は説明されています。
+エンドポイント（URL format が明記）
 
-ただし 「路面温度」「ブラックアイス（路面凍結状態）」は “US と EU territories のみ提供” と明記されています。日本は この追加要素は非対応です。
+http://maps.openweathermap.org/maps/2.0/weather/{op}/{z}/{x}/{y}?appid={API key}
+
+日本対応：
+
+(A) 対応（地図タイル/レイヤーで地理的制限の明記なし）
+
+(B) 一部レイヤーの注意（例：特定レイヤーで date 指定不可等）はあるが、国別制限ではない
+
 参考：URL
+https://docs.openweather.co.uk/api/weather-map-2
 
-Weather Maps 2.0（タイル/レイヤー）
+4) 参考：料金ページ上で「主要API」として並ぶ Current Weather / 3-hour Forecast など
 
-公式ドキュメント
+OpenWeather の Pricing ページでは、サブスクリプション対象の製品として Current Weather API / 3-hour Forecast (5 days) 等が列挙されています。
+
+日本対応：
+
+(A) 対応（一般に緯度経度/地名で世界中の地点を扱う設計）
+
+(B) 国限定の除外は、このページ上では明記されていません
+
 参考：URL
+https://openweathermap.org/price
 
-日本対応
+④ 料金体系（円換算＋内容、URL必須）
+為替の前提（円換算根拠）
 
-対応（地図タイルとして使う設計で、特定国限定の記載はなし）
+USD/JPY：日本銀行「外国為替市況（2026-02-04）17:00時点 156.42-44」
+→ 換算では 1 USD = 156.43 JPY（中央値） を使用
+
+GBP/JPY：Wise の履歴で「February 4, 2026：1 GBP = 214.9810 JPY」
+→ 換算では 1 GBP = 214.9810 JPY を使用
+
 参考：URL
+https://www.boj.or.jp/statistics/market/forex/fxdaily/fxlist/fx260204.pdf
 
-Air Pollution API（大気質）
+https://wise.com/gb/currency-converter/gbp-to-jpy-rate/history
 
-公式ドキュメント
+4-1) One Call API 3.0（Pay as you call：日次無料枠＋従量）
+
+無料枠：1,000 calls/day
+
+超過単価：0.0012 GBP / API call
+
+円換算：0.0012 × 214.9810 = 約0.258円 / call（約0.26円/call）
+
 参考：URL
+https://www.ionos.com/digitalguide/websites/web-development/openweather-api-key
 
-日本対応
+https://wise.com/gb/currency-converter/gbp-to-jpy-rate/history
 
-対応（“any coordinates on the globe” と明記）
+4-2) サブスクリプション（Price per month：Professional / Expert など）
+
+OpenWeather の Pricing ページに、月額と上限（calls/min・calls/month）が表として掲載されています。
+（このページは「…」省略表示部分がありますが、API Calls/Minute / API Calls/Month / Products の行が確認できます。）
+
+Professional：600 calls/min、10M calls/month（価格はページ上の Subscribe セクション）
+
+Expert：3,000 calls/min、100M calls/month（同上）
+
+それ以上の上位枠も同じ表に並びます
+
+ここは「円換算して金額を出す」ために 月額USDの数値が明示されているページが必要なので、同社の “old pricing / full price” にも明示値があるものを併記します。
+
 参考：URL
+https://openweathermap.org/price
 
-Geocoding API（地名→座標、座標→地名）
+https://openweathermap.org/full-price
 
-公式ドキュメント
+https://old.openweathermap.org/price
+
+4-3) （金額が明示されている例）旧 pricing（Current & Forecasts data 等の月額）
+
+旧 pricing（old.openweathermap.org/price）には、代表例として Startup 40 USD / Developer 180 USD / Professional 470 USD 等の月額が明記されています。
+
+Startup：40 USD → 40 × 156.43 = 約6,257円 / 月
+
+Developer：180 USD → 約28,157円 / 月
+
+Professional：470 USD → 約73,522円 / 月
+
 参考：URL
+https://old.openweathermap.org/price
 
-日本対応
-
-対応（地名/エリア名からlat/lon、逆も可能）
-参考：URL
-
-（参考：従来の分割API）Current / Forecast など
-
-One Callで足りる設計に寄せられていますが、従来の「現在天気」「5日/3時間」など個別APIも存在します（既存実装・互換目的で利用されがち）。
-
-Current weather data（公式ページ）
-参考：URL
-
-Pricing側で “Current Weather API / 3-hour Forecast (5 days)” 等の製品として列挙
-参考：URL
-
-日本対応：対応（緯度経度で取得する設計）
-参考：URL
-
-④ 料金体系（円換算・内容つき、URL必須）
-
-注意：OpenWeatherはプラン体系が複数系統（One Call 3.0の“pay-as-you-call” と、サブスク型の旧/別プラン群）で語られます。ここでは 公式に金額が明示されているものを中心に、円換算して記載します。
-為替は、USD→JPY と GBP→JPY の根拠を別途URLで示します。
-
-為替レート（円換算の前提）
-
-USD→JPY は、BoJの対ドル直物終値（例：156.42–156.44）を根拠に、概算換算に使用
-参考：URL
-
-GBP→JPY は、Wiseの履歴ページにある 2026-02-04 の高値（214.981）を根拠に、概算換算に使用
-参考：URL
-
-A) One Call API 3.0（pay-as-you-call）
-
-無料枠：1日あたり 1,000 call まで無料
-
-超過分：1 call あたり 0.0012 GBP
-
-円換算（概算）：0.0012 × 214.981 ≒ 約0.26円 / call
-参考：URL（1,000/day free と 0.0012 GBP/call の記載）
-
-B) サブスク（旧/別系統の月額プラン：Current & Forecasts data など）
-
-公式の “Subscription page” および “old pricing page” に、月額USDの具体額が明記されています。
-（ここは One Call 3.0 とは別に、複数プロダクトをまとめたサブスク枠として提示されています。）
-
-Startup：$40 / 月
-
-Developer：$180 / 月
-
-Professional：$470 / 月
-
-Enterprise：$2,000 / 月
-参考：URL（サブスク金額の明記）
-
-円換算（概算、USD/JPY ≒ 156.43 前提）
-
-Startup：40 × 156.43 ≒ 約6,257円 / 月
-
-Developer：180 × 156.43 ≒ 約28,157円 / 月
-
-Professional：470 × 156.43 ≒ 約73,522円 / 月
-
-Enterprise：2000 × 156.43 ≒ 約312,860円 / 月
-参考：URL（USDJPYの根拠）
-参考：URL（各プランの金額）
-
-「まとめ取り（One Call）」は同サービスの他APIと違うのか？（結論）
-
-違います。同じOpenWeatherの中でも、One Callは“複数カテゴリの気象要素を1回のAPIでまとめる”思想で作られており、個別API（現在天気・予報・地図タイル・大気汚染など）を別々に叩く設計とは役割が異なります。
-参考：URL（One Call 3.0 の “All-in-One / one simple call” の位置づけ）
+https://www.boj.or.jp/statistics/market/forex/fxdaily/fxlist/fx260204.pdf
