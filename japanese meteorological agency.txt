@@ -1,0 +1,146 @@
+① 概要（何ができる／どこの国／日本の地図対応／出典）
+何ができるのか
+
+防災・気象・地震火山などの発表情報を、機械処理しやすいXMLで取得し、自作システムでパースして表示できます（例：警報注意報、台風、地震・津波、火山、天気概況等）。高頻度・長期の2種類のAtomフィードを起点に、更新された個別XML電文を取得します。
+参考：URL https://xml.kishou.go.jp/xmlpull.html
+
+参考：URL https://xml.kishou.go.jp/
+
+全国アメダス等の観測データをCSVで取得し、降水量・気温・風・積雪などを自作画面に取り込めます（「最新」や「過去」）。
+参考：URL https://www.data.jma.go.jp/developer/index.html
+
+参考：URL https://www.data.jma.go.jp/stats/data/mdrr/docs/csv_dl_readme.html
+
+確率予測資料（2週間気温予報・1か月予報気温）をCSVで取得できます（予測の基礎資料としての数値データ）。
+参考：URL https://www.data.jma.go.jp/developer/index.html
+
+参考：URL https://www.data.jma.go.jp/risk/probability/index.html
+
+GPV（格子点値）系のサンプルデータ（数値予報モデル等の格子データの例）を取得できます。
+参考：URL https://www.data.jma.go.jp/developer/gpv_sample.html
+
+どこの国の会社か
+
+**日本の行政機関（気象庁）**で、国土交通省の外局として業務を実施しています。
+参考：URL https://www.jma.go.jp/jma/kishou/intro/gyomu/index2.html
+
+日本の地図は対応しているか
+
+日本向けの観測・予報・防災情報が中心です（例：全国アメダスの最新データ、府県天気予報、警報注意報など）。
+参考：URL https://www.data.jma.go.jp/developer/index.html
+
+参考：URL https://xml.kishou.go.jp/xmllist.pdf
+
+※ただし、気象庁が 地図タイル（ベースマップ）を提供するAPI という位置づけではありません。取得したデータ（区域コード／地点／座標等）を、MapLibre 等の地図上に重ねて表示する使い方になります。
+参考：URL https://xml.kishou.go.jp/qanda.html
+
+出典（どこからデータ取得しているのか）
+
+気象庁は、気象衛星・アメダス等の国内外の観測データを収集し、スーパーコンピュータ等を用いて予測し、予報官が情報を作成・発表し、それらを定めた形式で提供しています。
+参考：URL https://www.data.jma.go.jp/developer/index.html
+
+② 特色（他の地図系APIと比べて強い点）
+
+**一次ソース（公式発表・公式観測）**として扱える点が最大の強みです。民間の推定・集約データではなく、気象庁が作成・発表した情報をそのまま取得できます。
+参考：URL https://www.data.jma.go.jp/developer/index.html
+
+防災情報の体系が揃っている（気象・地震・津波・火山・台風等を同一の枠組みでXML化）。XMLの全体構造を共通化し、現象が異なっても処理しやすい設計になっています。
+参考：URL https://xml.kishou.go.jp/qanda.html
+
+参考：URL https://xml.kishou.go.jp/specifications.html
+
+**PULL型（登録不要・任意タイミング取得）**で、更新通知（Atom）→個別電文（XML）の形で差分取得しやすい。
+参考：URL https://www.data.jma.go.jp/developer/index.html
+
+参考：URL https://xml.kishou.go.jp/xmlpull.html
+
+注意点として、気象庁の公開XML電文には利用上の留意事項があり、特に予報値の編集・加工の扱い等に制約が明記されています（自作画面での表示設計で重要）。
+参考：URL https://xml.kishou.go.jp/considerationforxml.pdf
+
+③ 主要なAPIのリストと用途（ページリンク付き）
+
+ここでの「API」は、気象庁が公開している HTTPで取得できるデータ提供URL群（Atom/XML/CSV等）として整理します。
+
+A. 防災情報XML（PULL型：Atomフィード → 個別XML電文）
+
+情報の取得方法（PULL型の概要、フィードへの入口）
+参考：URL https://xml.kishou.go.jp/xmlpull.html
+
+高頻度フィード（毎分更新・直近少なくとも10分入電）
+
+定時（regular）：https://www.data.jma.go.jp/developer/xml/feed/regular.xml
+
+随時（extra）：https://www.data.jma.go.jp/developer/xml/feed/extra.xml
+
+地震火山（eqvol）：https://www.data.jma.go.jp/developer/xml/feed/eqvol.xml
+
+その他（other）：https://www.data.jma.go.jp/developer/xml/feed/other.xml
+
+参考：URL https://xml.kishou.go.jp/xmlpull.html
+
+長期フィード（毎時更新・数日間の全入電）
+
+定時（regular_l）：https://www.data.jma.go.jp/developer/xml/feed/regular_l.xml
+
+随時（extra_l）：https://www.data.jma.go.jp/developer/xml/feed/extra_l.xml
+
+地震火山（eqvol_l）：https://www.data.jma.go.jp/developer/xml/feed/eqvol_l.xml
+
+その他（other_l）：https://www.data.jma.go.jp/developer/xml/feed/other_l.xml
+
+参考：URL https://xml.kishou.go.jp/xmlpull.html
+
+取得可能な電文一覧（どの「資料名」がどの分類に入るか）
+参考：URL https://xml.kishou.go.jp/xmllist.pdf
+
+仕様（フォーマット本文、一覧表、辞書・コード管理表）
+参考：URL https://xml.kishou.go.jp/specifications.html
+
+技術資料（運用指針、運用整理表 等への入口）
+参考：URL https://xml.kishou.go.jp/tec_material.html
+
+利用上の留意事項（編集・加工、二次利用、予報業務との関係など）
+参考：URL https://xml.kishou.go.jp/considerationforxml.pdf
+
+よくある質問（構造の説明など）
+参考：URL https://xml.kishou.go.jp/qanda.html
+
+B. 観測データCSV（アメダス等）
+
+気象データ高度利用ポータル（取得導線の総合ページ）
+参考：URL https://www.data.jma.go.jp/developer/index.html
+
+最新の気象データ（CSV仕様：Shift_JIS等、ファイル仕様）
+参考：URL https://www.data.jma.go.jp/stats/data/mdrr/docs/csv_dl_readme.html
+
+過去の気象データ・ダウンロード（地点・項目・期間を選んでCSV取得）
+参考：URL https://www.data.jma.go.jp/risk/obsdl/
+
+C. 予測データCSV（確率予測資料）
+
+向こう2週間・1か月の予測資料（入口）
+参考：URL https://www.data.jma.go.jp/risk/probability/index.html
+
+確率予測資料（2週間気温予報）CSV取得ページ（例として北海道地方ページ）
+参考：URL https://www.data.jma.go.jp/risk/probability/guidance/csv_k2w.php
+
+確率予測資料（1か月予報気温）CSV取得ページ（例として北海道地方ページ）
+参考：URL https://www.data.jma.go.jp/risk/probability/guidance/csv_k1.php
+
+D. GPV（格子点値）サンプル
+
+GPVサンプルデータの一覧（データ名、概要、サンプル）
+参考：URL https://www.data.jma.go.jp/developer/gpv_sample.html
+
+④ 料金体系（公式記載のプラン名と価格をそのまま全て）
+
+気象庁の上記公開ページ（PULL型XML、CSVダウンロード、GPVサンプル）について、公式ページ上で「プラン名」と「価格」を列挙する形の料金体系は提示されていません。
+したがって、プラン名：無い／価格：無い と回答します。
+参考：URL https://www.data.jma.go.jp/developer/index.html
+
+参考：URL https://xml.kishou.go.jp/xmlpull.html
+
+※「迅速・確実な配信」は気象業務支援センター等の利用が案内されていますが、これは気象庁自身の公開ページの“料金プラン”ではありません。
+参考：URL https://xml.kishou.go.jp/xmlpull.html
+
+必要なら、次はあなたの監視システム向けに「最小構成のデータ取得フロー」を、(1) どのフィード/CSVを使うべきか → (2) 現在地（lat/lon）に寄せるロジック → (3) 返すJSON設計まで、JMA一次ソースに沿って具体化します。
