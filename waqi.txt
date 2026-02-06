@@ -1,0 +1,157 @@
+ 概要（できること／提供主体の国／日本対応／出典＝データ取得元）
+
+
+これは「World Air Quality Index（WAQI）」という“企業の製品API”というより、世界各国の大気質（AQI）を統合して可視化・提供する社会的プロジェクトの API（タイル／ウィジェット／JSON）です。主目的は「世界共通・リアルタイムの大気質情報を提供して、汚染への意識を高める」ことです。
+参考：URL https://aqicn.org/contact/
+
+
+提供主体の国（どこの国の会社か）
+法人名や登記国を明示した「会社情報ページ」は（一次ソースとして）見当たりません。
+一方で公式ページ上に “made in 北京” の表示があり、北京（中国）発のチームであることは読み取れます。
+参考：URL https://aqicn.org/contact/
+
+
+日本の地図は対応しているか
+対応しています。WAQI の「Map tile API」は Google / Bing / OpenStreetMap（Leaflet等）での重ね合わせを前提に提供されています。日本の都市（例：Tokyo）を含む複数都市ウィジェット例も提示されています。
+参考：URL https://aqicn.org/api/
+参考：URL https://aqicn.org/faq/2015-09-18/map-web-service-real-time-air-quality-tile-api/
+参考：URL https://aqicn.org/faq/2015-07-28/air-quality-widget-new-improved-feed/
+
+
+出典（どこからデータ取得しているのか）
+一次ソースとしての基本方針は「各国の環境当局（EPA等）が公開する公式観測データ」を統合している、という説明です（EPAソース一覧ページもある旨が記載）。
+参考：URL https://aqicn.org/contact/
+また、現在はプロ用途（BAM/TEOM等）に加えて、より安価なレーザー散乱型センサー等も併用されうる前提で、DIY局は追加の品質管理を通す、という記載があります。
+参考：URL https://aqicn.org/publishingdata/jp/
+参考：URL https://aqicn.org/publishingdata/inftrees
+
+
+
+② 特色（他の地図系APIと比べて何が強いか）
+
+
+「国境をまたいだ（trans-boundary）データ統合」を前提に、世界中の観測局データを同一スケール（US EPA AQI）で統一して地図表示・API提供する点が強みです。交通・地図API（渋滞/ルーティング等）と違い、“移動リスク要因としての大気質”をそのまま地図オーバーレイ（タイル）で入れられます。
+参考：URL https://aqicn.org/faq/2015-09-18/map-web-service-real-time-air-quality-tile-api/
+参考：URL https://aqicn.org/api/
+
+
+タイル（地図）・ウィジェット（Web埋め込み）・JSON（アプリ統合）を同一プロジェクトが提供しており、UIとデータ取得の両面を揃えやすい構成です。
+参考：URL https://aqicn.org/api/
+参考：URL https://aqicn.org/faq/2015-07-28/air-quality-widget-new-improved-feed/
+
+
+JSON API の説明として、単なる「総合AQI」だけでなく、主要汚染物質ごとの個別AQI、観測局名・座標、提供元（originating EPA）情報、現在天気、予報（3〜8日）などを返すと明記されています。
+参考：URL https://aqicn.org/api/
+
+
+
+③ 主要なAPIのリストと用途（細かなページリンクつき）
+
+
+JSON API（リアルタイム大気質を取得）
+
+
+
+
+用途：都市名などで AQI/汚染物質/観測局情報/提供元/EPAリンク/現在天気/予報（3〜8日）等を取得してアプリに表示
+参考：URL https://aqicn.org/api/
+
+
+代表例（都市名フィードの例が明記）
+http://api.waqi.info/feed/shanghai/?token=demo（例示）
+参考：URL https://aqicn.org/api/
+
+
+観測局ID指定（ステーション単位のフィード例が明記）
+https://api.waqi.info/feed/@3244/?token=__YOUR_TOKEN__（例示）
+参考：URL https://aqicn.org/data-platform/api/H3244/jp/
+
+
+“here”（IP等に基づく位置）フィードの例が提示
+https://api.waqi.info/feed/here/?token=...（例示）
+参考：URL https://aqicn.org/data-platform/token-confirm/
+
+
+
+
+Map tile API（地図タイル：AQIをオーバーレイ表示）
+
+
+
+
+用途：MapLibre/Leaflet/Google Maps/Bing/OSM等の地図に「大気質タイル」を重ねて表示（ズーム/タイル座標で取得）
+参考：URL https://aqicn.org/api/
+
+
+エンドポイント（明記）
+https://tiles.aqicn.org/tiles/{aqi}/{z}/{x}/{y}.png?token=_TOKEN_ID_
+参考：URL https://aqicn.org/faq/2015-09-18/map-web-service-real-time-air-quality-tile-api/
+
+
+aqi種別（例：usepa-aqi, usepa-pm25, usepa-10, usepa-o3, usepa-no2, usepa-so2, usepa-co 等）も列挙されています。
+参考：URL https://aqicn.org/faq/2015-09-18/map-web-service-real-time-air-quality-tile-api/
+
+
+
+
+Widget API（Webページ埋め込み）
+
+
+
+
+用途：Webサイトに「都市のAQIウィジェット」を簡単に埋め込む（言語や表示フォーマット、コールバックなどを指定）
+参考：URL https://aqicn.org/api/
+
+
+フィードJSの読込先（明記）
+//feed.aqicn.org/feed/{city}/{lang}/feed.v1.js?...&k=...（サンプルコード内で提示）
+参考：URL https://aqicn.org/faq/2015-07-28/air-quality-widget-new-improved-feed/
+
+
+
+
+Data Upload API（観測局データの投稿）
+
+
+
+
+用途：自前の観測局データをWAQI側へアップロードして地図/プラットフォームに載せる（検証フローも案内）
+参考：URL https://aqicn.org/data-feed/upload-api/
+
+
+
+
+トークン取得（全API共通の前提）
+
+
+
+
+用途：APIアクセス用トークンの申請
+参考：URL https://aqicn.org/data-platform/token/
+
+
+※「JSON API の on-line API documentation（aqicn.org/json-api/doc/）」への導線はありますが、こちらは閲覧時に “Loading…” となり、内容確認できませんでした（一次ソースとして中身を引用できない）。
+参考：URL https://aqicn.org/api/
+
+④ 料金体系（公式記載内容のみ：プラン名と価格）
+
+
+プラン名：無い
+
+
+価格：無い（All the APIs are provided for free）
+参考：URL https://aqicn.org/api/
+
+
+補足（ただし「料金」ではなく利用制限）：
+
+
+データは「販売・有料アプリ/サービスでの利用・キャッシュ/アーカイブ再配布」が禁止
+
+
+営利企業の публич 利用は WAQI チームとの明示的合意が必要
+参考：URL https://aqicn.org/api/
+
+
+
+必要なら、あなたの「調査員/調査車のリアルタイム監視マップ（MapLibre等）」前提で、WAQI を (A) タイルで可視化 / (B) JSONで数値アラート の2系統に分けた実装イメージ（UI導線とレート制御含む）も、一次ソースに沿って整理します。
