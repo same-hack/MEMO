@@ -1,0 +1,126 @@
+① 概要（Webアプリ＝PCブラウザから利用する前提）
+
+Google Maps Platform は、Google の地図・地点（Places）・経路（Routes）などを Webアプリに組み込むためのAPI/SDK群です。PCのWebアプリでは、主に Maps JavaScript API（地図表示） と、HTTPで叩く Web Service API（Places / Routes / Geocoding / Roads など） を組み合わせて使います。
+参考：URL https://developers.google.com/maps
+
+参考：URL https://developers.google.com/maps/documentation
+
+できること（Webアプリ中心）
+
+ブラウザ上に地図を表示し、調査員・調査車の現在位置/軌跡を可視化（マーカー・ポリライン等）
+参考：URL https://developers.google.com/maps/documentation/javascript
+
+住所⇄緯度経度変換（ジオコーディング）
+参考：URL https://developers.google.com/maps/documentation/geocoding
+
+経路探索・距離/所要時間・（交通状況を考慮した）到着予測（ETA）
+参考：URL https://developers.google.com/maps/documentation/routes
+
+GPS点列を道路へスナップ（軌跡補正、走行道路の推定）
+参考：URL https://developers.google.com/maps/documentation/roads/overview
+
+周辺施設/地点情報（Place）検索・詳細取得
+参考：URL https://developers.google.com/maps/documentation/places/web-service/overview
+
+どこの国の会社か
+
+Maps Platform の提供主体は Google（Google Cloudの契約主体情報として各国の法人が示されます）。
+参考：URL https://cloud.google.com/terms/google-entity
+
+日本の地図は対応しているか
+
+Google は国別のカバレッジ表を公開しており、日本（Japan）についてもAPI/SDK別の対応状況を確認できます。
+参考：URL https://developers.google.com/maps/coverage
+
+出典（どこからデータ取得しているか）
+
+Google は、地図データが 世界中の 1,000 以上のサードパーティソースから来ることを説明しています。
+参考：URL https://blog.google/products-and-platforms/products/maps/google-maps-101-how-we-map-world/
+
+また、Google以外の提供者データが含まれる場合があり、製品によっては 「Map data: Google, Maxar Technologies」 のようにデータ提供者の帰属表示が必要になることが明記されています。
+参考：URL https://developers.google.com/maps/documentation/tile/policies
+
+② 特色（他の地図系APIと比べた強み：Webアプリ観点）
+
+Webでの地図体験を“公式に”完結できる：地図表示（Maps JS）＋地点（Places）＋経路（Routes）＋道路スナップ（Roads）を同一プラットフォームで組み合わせ可能。
+参考：URL https://developers.google.com/maps/documentation
+
+データの取得元（サードパーティ含む）と帰属（attribution）要件が明文化されているため、商用Webアプリの監査・運用で根拠を持ちやすい。
+参考：URL https://developers.google.com/maps/documentation/tile/policies
+
+課金体系がSKUベースで整理され、サブスクリプション（固定額）と従量課金（Pay as you go）を選べる。
+参考：URL https://mapsplatform.google.com/pricing/
+
+参考：URL https://developers.google.com/maps/billing-and-pricing/pricing
+
+③ 主要API（Webアプリで使う前提のリスト）と用途・ページリンク
+地図表示（ブラウザ）
+
+Maps JavaScript API：Webページにインタラクティブ地図を表示（マーカー、オーバーレイ、イベント等）。
+参考：URL https://developers.google.com/maps/documentation/javascript
+
+Maps JavaScript API – Usage and Billing：Webで「どの操作がどのSKU課金か」を確認するページ。
+参考：URL https://developers.google.com/maps/documentation/javascript/usage-and-billing
+
+経路・所要時間（HTTPで叩く）
+
+Routes API：経路探索、所要時間・距離、ルート行列（複数拠点×複数目的地）。
+参考：URL https://developers.google.com/maps/documentation/routes
+
+道路スナップ（HTTPで叩く）
+
+Roads API：GPS点列の道路スナップ、走行経路推定など。
+参考：URL https://developers.google.com/maps/documentation/roads/overview
+
+地点検索・施設情報（HTTPで叩く）
+
+Places API（Web Service）：周辺検索、Place詳細、住所/施設の検索体験の強化。
+参考：URL https://developers.google.com/maps/documentation/places/web-service/overview
+
+住所⇄座標変換（HTTPで叩く）
+
+Geocoding API：住所→緯度経度、緯度経度→住所など。
+参考：URL https://developers.google.com/maps/documentation/geocoding
+
+補助（必要に応じて）
+
+Elevation API：標高（勾配推定の材料）。
+参考：URL https://developers.google.com/maps/documentation/elevation/overview
+
+Time Zone API：地点のタイムゾーン情報。
+参考：URL https://developers.google.com/maps/documentation/timezone/overview
+
+Maps Static API：静的地図画像生成（レポート/印刷用途など）。
+参考：URL https://developers.google.com/maps/documentation/maps-static
+
+Street View Static API：地点のストリートビュー静止画。
+参考：URL https://developers.google.com/maps/documentation/streetview/overview
+
+Maps Embed API：埋め込み表示。
+参考：URL https://developers.google.com/maps/documentation/embed
+
+Webアプリ要件に関する重要事項（「無い」を明言）
+
+天候（気温・降水・風・警報など）を取得するGoogle Maps PlatformのAPI：無い
+参考：URL https://developers.google.com/maps/documentation
+
+④ 料金体系（存在するプラン名と価格をそのまま全て／URL必須）
+サブスクリプション（固定額）
+
+Starter：$100 / month
+
+Essentials：$275 / month
+
+Pro：$1,200 / month
+参考：URL https://developers.google.com/maps/billing-and-pricing/subscriptions
+
+参考：URL https://mapsplatform.google.com/pricing/
+
+従量課金（Pay as you go）
+
+プラン名と固定価格：無い（SKUごとの従量課金。単価は「1,000 events あたり」等で提示）
+参考：URL https://developers.google.com/maps/billing-and-pricing/pricing
+
+参考：URL https://developers.google.com/maps/billing-and-pricing/overview
+
+必要なら、この“PC Webアプリから叩く”前提で、あなたのシステム要件（リアルタイム監視＋遅延要因の可視化）を Google Maps Platformで賄える部分（地図/経路/スナップ/標高） と 別APIが必要な部分（天候） に分けて、採用判断用の文章に落とし込みます。
