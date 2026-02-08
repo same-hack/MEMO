@@ -1,0 +1,213 @@
+Mapboxは、Web・モバイル向けに「地図表示（描画）」「検索（住所・POI）」「ルート案内（ナビ）」「各種地理データ（交通・境界など）」を、API/SDKとして提供するロケーションプラットフォームです。トップページ上でも、Maps / Navigation / Search / Data の提供を明確にしています。
+参考：URL
+https://www.mapbox.com/ 
+会社（どこの国か）
+Mapbox, Inc. は米国（Washington, DC の住所が記載）です。
+参考：URL
+https://www.bloomberg.com/profile/company/0883327D:US 
+日本の地図対応
+Mapbox の地図データ基盤（Mapbox Streets 等）はグローバルで、OpenStreetMap を基礎にしつつ追加データのコンフレーション等で強化する、と Mapbox 自身が説明しています（=日本も対象）。また、日本向けに「日本固有データ」を含む tileset（例：Mapbox Transit v2）があり、Zenrin データを使う、と明記されています。
+参考：URL
+https://docs.mapbox.com/help/dive-deeper/mapbox-data-sources/ 
+https://docs.mapbox.com/ja/data/tilesets/reference/mapbox-transit-v2/ 
+出典（どこからデータ取得しているか） ※Mapbox公式の説明に基づく
+
+
+ベース地図（Mapbox Streets）：OpenStreetMap（OSM）を土台にし、Mapbox が品質管理・検証・追加の商用/政府データとのコンフレーション等で強化。
+参考：URL
+https://docs.mapbox.com/help/dive-deeper/mapbox-data-sources/ 
+
+
+衛星画像（Mapbox Satellite）：Maxar/Planet 等の商用衛星、NASA/USGS 等の政府・国際機関のオープンデータなど複数ソースを合成・補正して提供。
+参考：URL
+https://docs.mapbox.com/help/dive-deeper/mapbox-data-sources/ 
+
+
+標高・地形（Terrain）：USGS / NASA SRTM 等の政府データ＋商用プロバイダ等を組み合わせ、整合処理。
+参考：URL
+https://docs.mapbox.com/help/dive-deeper/mapbox-data-sources/ 
+
+
+ジオコーディング（検索）：政府の住所データ・郵便、オープンデータ、商用データ、POIディレクトリ等の複数ソース。
+参考：URL
+https://docs.mapbox.com/help/dive-deeper/mapbox-data-sources/ 
+
+
+交通（ナビ/渋滞/インシデント）：匿名化・集計されたモバイル/フリート等のデータ、過去統計、事故・工事・通行止め等のインシデント、速度制限や右左折制約等の道路属性。
+参考：URL
+https://docs.mapbox.com/help/dive-deeper/mapbox-data-sources/ 
+
+
+日本固有の公共交通（例：Mapbox Transit v2）：日本のみのデータで、Zenrin を使用、約3ヶ月ごとに更新と明記。
+参考：URL
+https://docs.mapbox.com/ja/data/tilesets/reference/mapbox-transit-v2/ 
+
+
+
+② 特色（他の地図系APIと比べて強いところ）
+
+
+「地図描画」だけでなく、Search / Navigation / Data まで一体で揃う（同一アカウント・同一トークン体系で組み合わせやすい）
+参考：URL
+https://www.mapbox.com/ 
+
+
+ベクタータイル前提での高いカスタマイズ性（スタイル/レイヤー/独自データ）
+Mapbox は Maps Service として、タイル取得・静的画像・アップロード・tileset照会等をAPIで提供し、SDK/GL JS でレンダリング可能と整理しています。
+参考：URL
+https://docs.mapbox.com/api/maps/ 
+https://docs.mapbox.com/api/maps/vector-tiles/ 
+https://docs.mapbox.com/data/tilesets/guides/ 
+
+
+GPS軌跡の補正（Map Matching）や到達圏（Isochrone）、多地点の所要時間行列（Matrix）など「移動監視・分析」に直結するAPIが揃う
+参考：URL
+https://docs.mapbox.com/api/navigation/ 
+https://docs.mapbox.com/api/navigation/map-matching/ 
+https://docs.mapbox.com/api/navigation/isochrone/ 
+https://docs.mapbox.com/api/navigation/matrix/ 
+
+
+日本向けに“日本固有データ”を使う tileset が存在する（例：Zenrin を用いる公共交通tileset）
+参考：URL
+https://docs.mapbox.com/ja/data/tilesets/reference/mapbox-transit-v2/ 
+
+
+
+③ 主要APIのリストと用途（公式ドキュメントリンク）
+Maps（地図表示・タイル・画像・データ取り込み/照会）
+
+
+Vector Tiles API：ベクタータイル配信（クライアントで描画して柔軟に表現）
+参考：URL
+https://docs.mapbox.com/api/maps/vector-tiles/ 
+
+
+Raster Tiles API：衛星画像などのラスタタイル配信
+参考：URL
+https://docs.mapbox.com/api/maps/raster-tiles/ 
+
+
+Static Images API：スタイルから静的地図画像を生成して返す（非インタラクティブ）
+参考：URL
+https://docs.mapbox.com/api/maps/static-images/ 
+
+
+Tilequery API：特定地点（＋半径など）周辺の tileset 内フィーチャを照会（点-in-ポリゴン等にも利用）
+参考：URL
+https://docs.mapbox.com/api/maps/tilequery/ 
+
+
+Uploads API：手持ちの地理データを tileset 化して Mapbox 上で使えるようにする
+参考：URL
+https://docs.mapbox.com/api/maps/uploads/ 
+
+
+Mapbox Tiling Service (MTS)：レシピ等を使ってサーバ側でタイル生成（カスタム tileset 作成の中核）
+参考：URL
+https://docs.mapbox.com/api/maps/mapbox-tiling-service/ 
+
+
+Maps Service 全体の整理（どんなAPI群があるか）
+参考：URL
+https://docs.mapbox.com/api/maps/ 
+
+
+Search（住所・POI検索）
+
+
+Search Box API：住所・場所・POIの検索（インタラクティブ検索の実装を想定）
+参考：URL
+https://docs.mapbox.com/api/search/search-box/ 
+
+
+Geocoding API：forward（文字→座標）/ reverse（座標→地名・住所）
+参考：URL
+https://docs.mapbox.com/api/search/geocoding/ 
+
+
+Search カテゴリ全体の整理
+参考：URL
+https://docs.mapbox.com/api/search/ 
+
+
+Address Autofill：住所入力フォーム向けのオートフィル（※APIとしての説明ページではなく、Search JS/SDK側のガイドが中心）
+参考：URL
+https://docs.mapbox.com/ios/search/guides/address-autofill/ 
+※「純粋な“Address Autofill API Docs”」という形の単独ページは、上記の公式ドキュメント範囲では確認できません（無い）。
+
+
+Navigation（ルート・ETA・マップマッチ・最適化）
+
+
+Directions API：経路探索（車/徒歩/自転車等）と案内情報
+参考：URL
+https://docs.mapbox.com/api/navigation/directions/ 
+
+
+Matrix API：多地点間の所要時間/距離の行列（ジオメトリ無し）
+参考：URL
+https://docs.mapbox.com/api/navigation/matrix/ 
+
+
+Isochrone API：一定時間/距離で到達可能な領域ポリゴン等
+参考：URL
+https://docs.mapbox.com/api/navigation/isochrone/ 
+
+
+Map Matching API：GPSの荒い軌跡を道路ネットワークへスナップ（走行ルート補正）
+参考：URL
+https://docs.mapbox.com/api/navigation/map-matching/ 
+
+
+Optimization API v2：複数地点巡回の最適化（VRP/TSP系、v2はBetaと明記）
+参考：URL
+https://docs.mapbox.com/api/navigation/optimization/ 
+
+
+Navigation カテゴリ全体の整理
+参考：URL
+https://docs.mapbox.com/api/navigation/ 
+
+
+Data（交通・境界などのデータ製品）
+
+
+Data 全体（Traffic / Movement / Boundaries などの製品カテゴリがあること）
+参考：URL
+https://www.mapbox.com/ 
+（※「Data製品の“APIエンドポイント一覧”」のような単一ページは、今回の調査範囲では確実に一次ソースで網羅できませんでした。必要なら “Traffic Data / Movement Data / Boundaries” の各ドキュメントを個別に掘ります。）
+
+
+
+④ 料金体系（公式のプラン名と価格をそのまま全て記載、URL必須）
+Mapbox は Pay-as-you-go（従量課金） を明示しており、製品ごとに無料枠と従量単価（例：MAUやトリップ数など）が設定されています。
+参考：URL
+https://www.mapbox.com/pricing 
+このページに「プラン名」として明確に列挙され、価格が書かれているものは Support（サポート） の区分です（それ以外は“製品ごとの従量価格表”が中心で、月額固定の“プラン名”としてまとまっていません）。
+Support（プラン名と価格）
+
+
+Individual：$50 / month
+参考：URL
+https://www.mapbox.com/pricing 
+
+
+Business：10% of monthly spend ($500/mo minimum)、および $6000 / year（同一セクション内に併記）
+参考：URL
+https://www.mapbox.com/pricing 
+
+
+Premium：Let’s talk（価格の数値記載は無し）
+参考：URL
+https://www.mapbox.com/pricing 
+
+
+それ以外の「プラン名と価格」
+
+
+（無い）：少なくとも公式の Pricing ページ上では、Support 以外は「プラン名＋月額固定価格」として一括提示されておらず、Navigation/Maps/Search/Tilesets/Vision 等は 無料枠＋従量単価（Detailed pricing） で提示されています。
+参考：URL
+https://www.mapbox.com/pricing 
+
+
