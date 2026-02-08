@@ -1,218 +1,192 @@
-TomTom Traffic API 概要整理（交通情報取得用途）
-1. 会社概要・データ提供体制（日本対応含む）
+① 概要（何ができるか／どこの国の会社か／日本対応／出典）
+TomTom Traffic APIs とは（何ができるか）
 
-会社名：TomTom
+TomTom の「Traffic APIs」は、主に リアルタイム交通（渋滞＝Traffic Flow、事故・規制＝Traffic Incidents） と、別系統として 過去の統計交通（Traffic Stats / Historical Traffic） を扱う API 群です。リアルタイム系は REST API として、地図上への重畳表示（タイル）や、座標近傍の道路リンクの速度・所要時間/渋滞度、事故・工事・通行止めなどの事象取得に使えます。
 
-本社所在地：オランダ（アムステルダム）
+参考：URL
+https://developer.tomtom.com/traffic-api/documentation/tomtom-maps/product-information/introduction
 
-事業内容：
-デジタル地図、ナビゲーション、交通情報（トラフィック）、位置情報プラットフォームの提供
+https://developer.tomtom.com/traffic-api/documentation/tomtom-maps/traffic-flow/traffic-flow-service
 
-TomTom は自動車メーカー、物流事業者、行政機関向けに、長年にわたり交通情報および走行データを提供している地図・交通情報ベンダー。
+https://docs.tomtom.com/traffic-api/documentation/tomtom-maps/traffic-incidents/traffic-incidents-service
 
-トラフィックデータの出典（Floating Car Data）
+会社はどこの国か
 
-TomTom の交通情報は、主に Floating Car Data（FCD） を基に生成されている。
+TomTom は オランダ（Amsterdam, The Netherlands） の企業（TomTom N.V.）です。
 
-実際に走行している車両・デバイスから取得される匿名化データ
+参考：URL
+https://www.tomtom.com/impressum/
 
-位置、速度、移動時間などを継続的に収集
+日本の地図・交通は対応しているか（重要）
 
-リアルタイム交通状況および予測算出に利用
+結論から言うと、「Developer Portal の Traffic API（Traffic Flow / Incidents）の Market Coverage 一覧」には日本（Japan / JP）が掲載されていません。このページは「一覧に無い market はサポートされない」と定義しており、少なくとも この Traffic API（TomTom Maps の Traffic Flow/Incidents）としては日本がサポート対象外と読み取れます。
 
-公式説明：
-https://developer.tomtom.com/move-portal/guides/od-analysis/introduction
+一方で、Traffic Stats API（過去統計） の Market Coverage には Japan (JP) が掲載されており、「選定都市に限定される可能性がある」旨も記載されています。
 
-日本でのデータ対応
+参考：URL
+https://developer.tomtom.com/traffic-api/documentation/tomtom-maps/product-information/market-coverage
 
-TomTom は 日本国内でも交通データを収集・提供している
+https://developer.tomtom.com/traffic-stats/documentation/product-information/market-coverage
 
-日本の都市別トラフィック指数が公開されており、国内実データの存在が確認できる
+※補足（矛盾の扱い）
+TomTom 自体は日本での交通サービス提供をうたう発表や、第三者（パートナー）側の発表も存在しますが、**「開発者向け Traffic API の日本対応」**という観点では、一次ソース（Market Coverage）が日本を含んでいないため、ここでは **「Traffic API は日本対応が確認できない（＝サポート外扱い）」**を結論にしています。
 
-例：
-https://www.tomtom.com/traffic-index/city/fukuoka
+参考：URL
+https://www.tomtom.com/newsroom/press-releases/general/20036/tomtom-traffic-launches-in-japan/
 
-日本では ZENRIN様と協業しており、日本市場向けのデータ品質向上および提供体制について公式発表が行われている
+https://english.geot.jp/pressrelease-20250207/
 
-公式発表：
-https://www.zenrin.co.jp/information/public/171027.html
+出典（どこからデータ取得しているのか）
 
-2. TomTom Traffic API の特色
-他の地図系 API と比較した際の注目点
+TomTom は交通データについて、複数ソース（スマートフォン、車載/ナビ、フリート、政府・道路センサー等）を統合して交通状況を生成する、と説明しています。
 
-大量のプローブデータに基づくリアルタイム性
-実走行データ（FCD）を大量に収集し、現在速度や渋滞状況を高頻度で算出できる。
+参考：URL
+https://developer.tomtom.com/blog/build-different/build-traffic-alert-dashboard-tomtom-traffic-api/
 
-解説：
-https://www.tomtom.com/newsroom/product-focus/tomtom-traffic-stats-explained/
+https://www.tomtom.com/newsroom/behind-the-map/road-traffic-prediction/
 
-地図表示と独立したトラフィック API
-地図タイルの利用が必須ではなく、MapLibre などの既存地図基盤と組み合わせて利用できる。
+https://www.tomtom.com/newsroom/behind-the-map/continuous-map-processing/
 
-用途に応じた多様な配信方式
+② 特色（他の地図系APIと比べて何が強いか）
 
-REST API（JSON）
+「地図表示用のタイル」と「分析/取得用の非タイル」を両方持つ
+Traffic Flow / Incidents ともに、**地図に重ねるタイル（Raster / Vector tiles）**と、**座標やBBoxで取得する非タイル（例：Flow Segment Data / Incident Details）**が用意されています。UI用途（重畳表示）と、ロジック用途（遅延検知・アラート判定）を分けて実装しやすいのが強みです。
 
-表示向けラスタ／ベクタタイル
+更新頻度を明記（“every minute”）している
+Traffic Flow/Incidents について、少なくともドキュメント上は 毎分更新が明記されています（リアルタイム監視の根拠にしやすい）。
 
-エンタープライズ向け（DATEX II、Protobuf 等）
+データソースを“複数統合”として説明している
+スマホ、車載/ナビ、フリート、政府センサー等の統合という説明は、品質/カバレッジの説明として採用しやすいです。
 
-3. 利用を想定する主要 API
-① Traffic Flow API
+Historical（Traffic Stats）系を別体系で提供
+過去の速度・所要時間統計（Route/Area Analysis）を API として提供しており、リアルタイムだけでなく「平常時平均との差」「曜日/時間帯平均との差」「ボトルネック特定」などの分析系に繋げやすいです。
 
-道路ごとのリアルタイム渋滞・速度情報を取得する API
+参考：URL
+https://developer.tomtom.com/traffic-api/documentation/tomtom-maps/traffic-flow/traffic-flow-service
 
-この API で分かること
+https://docs.tomtom.com/traffic-api/documentation/tomtom-maps/traffic-incidents/traffic-incidents-service
 
-指定した道路について、
-現在どの程度の速度で流れており、
-通常時と比べてどれくらい混雑しているかを数値で把握できる。
+https://developer.tomtom.com/traffic-stats/documentation/product-information/introduction
 
-主なレスポンスパラメータ
+https://docs.tomtom.com/traffic-stats/documentation/api/introduction/
 
-currentSpeed
-現在の平均走行速度
-実際にその道路を走行している車両の平均速度
+③ 主要なAPIのリストと用途（細かなページリンク）
+A. リアルタイム交通：Traffic API（Traffic Flow / Traffic Incidents）
+Traffic Flow（渋滞・速度・所要時間）
 
-freeFlowSpeed
-通常時（自由流）の基準速度
-渋滞や混雑がない状態で、その道路が本来出せる速度
-（制限速度ではなく、過去の実走行データから算出された比較用の基準値）
+Flow Segment Data (get)
+指定座標の近傍道路リンク（fragment）について、速度・所要時間などを返す。
+参考：URL
+https://developer.tomtom.com/traffic-api/documentation/tomtom-maps/traffic-flow/traffic-flow-service
 
-currentTravelTime
-現在の走行時間
-現在の交通状況を反映した道路区間の通過時間
+Raster Flow Tiles (get)
+渋滞の色分け等をラスタタイル（256/512px）で配信。
+参考：URL
+https://developer.tomtom.com/traffic-api/documentation/tomtom-maps/traffic-flow/traffic-flow-service
 
-freeFlowTravelTime
-自由流時の走行時間
-混雑がない場合に想定される道路区間の通過時間
+Vector Flow Tiles (get)
+0〜22 のズームに対応するベクタタイルとして渋滞データを配信。
+参考：URL
+https://developer.tomtom.com/traffic-api/documentation/tomtom-maps/traffic-flow/traffic-flow-service
 
-これらの値を比較することで、渋滞の有無や遅延量を定量的に評価できる。
+Traffic Incidents（事故・工事・通行止め等）
 
-想定用途
+Incident Details (get/post)
+BBox（または交差）内の交通インシデント情報を返す。
+参考：URL
+https://docs.tomtom.com/traffic-api/documentation/tomtom-maps/traffic-incidents/traffic-incidents-service/
 
-道路単位の渋滞可視化
+Incident Viewport (get)
+指定 viewport に対する法務/技術情報を返す（表示や利用条件の確認用途）。
+参考：URL
+https://docs.tomtom.com/traffic-api/documentation/tomtom-maps/traffic-incidents/traffic-incidents-service/
 
-地域ごとの混雑度の数値化
+Raster Incident Tiles (get)
+インシデントをラスタタイル（256/512px）で配信。
+参考：URL
+https://docs.tomtom.com/traffic-api/documentation/tomtom-maps/traffic-incidents/traffic-incidents-service/
 
-MapLibre + ZENRIN様 地図への独自オーバーレイ表示
+Vector Incident Tiles (get)
+0〜22 のズームに対応するベクタタイルでインシデントを配信。
+参考：URL
+https://docs.tomtom.com/traffic-api/documentation/tomtom-maps/traffic-incidents/traffic-incidents-service/
 
-地図描画を伴わない交通指標提供
+対応国（Traffic Flow/Incidents）
 
-公式ドキュメント
+Traffic API Market Coverage（Traffic Incidents / Traffic Flow の対応国一覧）
+参考：URL
+https://developer.tomtom.com/traffic-api/documentation/tomtom-maps/product-information/market-coverage
 
-https://developer.tomtom.com/traffic-api/documentation/traffic-flow/flow-segment-data
+（この一覧に日本は掲載されていません。）
 
-② Traffic Incidents API
+B. 過去統計交通：Traffic Stats API（Historical Traffic）
 
-事故・工事・交通規制情報を取得する API
+Traffic Stats service（概要）
+Route Analysis / Area Analysis などのサービス構成の入口。
+参考：URL
+https://docs.tomtom.com/traffic-stats/documentation/api/introduction/
 
-取得できる情報
+https://developer.tomtom.com/traffic-stats/documentation/api/introduction
 
-交通事故
+Route Analysis
+起点・終点（＋経由地）で定義したルートの統計（平均/中央値/分位など）を非同期ジョブで算出。
+参考：URL
+https://developer.tomtom.com/traffic-stats/documentation/api/route-analysis
 
-道路工事
+Area Analysis
+指定ジオメトリのエリア統計を非同期ジョブで算出（jobId → 状態確認 → 結果ダウンロード）。
+参考：URL
+https://developer.tomtom.com/traffic-stats/documentation/api/area-analysis
 
-通行止め
+Market Coverage（Traffic Stats）
+日本（JP）は “Available from 2020” として掲載。加えて「一部国は選定都市に限定」と明記。
+参考：URL
+https://developer.tomtom.com/traffic-stats/documentation/product-information/market-coverage
 
-車線規制
+Available Maps（Traffic Stats）
+日本向けに、年ごとの対応期間とマップバージョンの表がある。
+参考：URL
+https://developer.tomtom.com/traffic-stats/documentation/api/available-maps
 
-その他、交通に影響を与える一時的な規制・事象
+④ 料金体系（プラン名と価格をそのまま全て。URL必須）
 
-各事象に含まれる主な情報
+TomTom（Developer 向け）の公開料金は、少なくとも以下の 2プラン名が掲載されています。
 
-発生位置および影響区間
+プラン名
 
-影響方向
+Free evaluation
 
-深刻度
+Pay as you grow
 
-開始時刻・更新時刻
+参考：URL
+https://docs.tomtom.com/pricing
 
-予想終了時間（提供される場合）
+Traffic APIs の公開単価（Prices per 1000 requests）
 
-想定用途
+（下記は公開ページの表記どおり）
 
-渋滞発生要因の可視化
+Traffic Incidents non-tile：€0.75
 
-注意喚起・アラート表示
+Traffic Incidents tiles：€0.08
 
-地域単位での交通リスク把握
+Traffic Flow non-tiles：€0.75
 
-公式ドキュメント
+Traffic Flow tiles：€0.08
 
-https://developer.tomtom.com/traffic-api/documentation/traffic-incidents/traffic-incidents-service
+参考：URL
+https://docs.tomtom.com/pricing
 
-4. API の役割整理
-API	取得できる情報	主な役割
-Traffic Flow API	道路の速度・流れ	渋滞度・遅延量の定量把握
-Traffic Incidents API	事故・工事・交通規制	混雑・遅延の原因把握
-5. 想定システム構成との適合性
+無料枠（公開記載）
 
-地図表示：MapLibre + ZENRIN様
+All Freemium and Pay-as-you-grow customers get a free daily allowance of 50,000 tile requests and 2,500 non-tile requests（タイル 50,000/日、非タイル 2,500/日。全プロダクト共有）
 
-交通情報取得：TomTom Traffic API
+参考：URL
+https://docs.tomtom.com/pricing
 
-地図基盤と交通データを分離することで、
+「カスタムプラン」の価格
 
-既存の地図資産を活用しつつ
+価格：無い（公開ページに金額の記載なし）
+公開ページ上は “Need a custom plan?” という導線のみで、プラン名や価格表は提示されていません。
 
-リアルタイム交通情報のみを API で取得・更新
-
-する構成が可能となり、柔軟性と拡張性の高いシステム設計に適している。
-
-
-
-Traffic Incidents
-
-道路ネットワーク上で発生している 交通渋滞および各種交通事象（事故、工事、通行止めなど） を、正確に把握するためのサービス。
-
-Traffic Flow
-
-道路ネットワーク上の主要道路について、リアルタイムに観測された走行速度および走行時間 を提供するサービス。
-
-
-
-Traffic Incidents
-
-Traffic Incidents は、道路ネットワーク上で発生している 交通上の異常や支障となる出来事 を取得するためのサービスである。
-
-事故、道路工事、通行止め、車線規制など、通常の交通の流れを妨げる一時的な事象を対象としており、
-それぞれの事象について、
-
-どこで発生しているのか
-
-どの道路・区間に影響しているのか
-
-どの方向に影響があるのか
-
-どの程度交通に影響を与えているのか
-
-といった情報を把握できる。
-
-渋滞の「結果」だけでなく、渋滞が発生している原因や背景となる事象を可視化できる点が特徴であり、
-リアルタイムな注意喚起、交通状況の分析、混雑要因の把握などに利用される。
-
-公式ドキュメント（Traffic Incidents API 一覧）
-https://developer.tomtom.com/traffic-api/documentation/traffic-incidents
-
-Traffic Flow
-
-Traffic Flow は、道路ネットワーク上の主要道路について、現在の交通の流れを数値として取得するためのサービスである。
-
-各道路区間ごとに、
-
-現在どの程度の速度で車両が走行しているか
-
-通常時（混雑のない状態）と比べてどれくらい遅れているか
-
-現在の走行時間と、通常時の走行時間の差
-
-といった情報を、リアルタイムの観測データに基づいて提供する。
-
-これにより、道路ごとの混雑度や遅延状況を定量的に把握でき、
-地図表示を伴わない交通指標の提供や、独自地図上へのオーバーレイ表示、
-地域単位・路線単位での混雑分析などに利用できる。
-
-公式ドキュメント（Traffic Flow API 一覧）
-https://developer.tomtom.com/traffic-api/documentation/traffic-flow
+参考：URL
+https://docs.tomtom.com/pricing
