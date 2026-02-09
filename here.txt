@@ -148,3 +148,59 @@ https://www.here.com/docs/bundle/traffic-api-developer-guide-v7/page/topics/gett
 日本で Incident 情報を使いたい場合、Coverage API の結果を確認して利用可否を判断するのが推奨です。
 
 Traffic Flow は API 内の主力であり、日本でも安定して利用可能です。
+
+
+
+
+
+
+
+
+
+
+
+
+＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+
+
+HERE Traffic Raster Tile API v3 は REST API であり、
+    HERE が交通データを提供している世界中のすべての地域について、
+    交通情報を含む地図タイル画像をリクエストできます。
+  termsOfService: https://developer.here.com/terms-conditions
+
+
+  Traffic Raster Tile API v3（ラスタ＝画像タイル）
+何が返ってくる？
+
+PNG/JPG の画像タイル（レスポンス image/png or image/jpg）
+
+あなたが貼った定義だと resource は flow だけで、これは
+透明背景の上に、交通状況（渋滞）を色付きの線として描画したタイル（= “traffic flow lines on transparent tiles”）を返す。
+※つまり「道路の交通状態を“絵”にして返す」
+
+
+
+
+
+
+
+〜〜〜〜〜〜〜〜〜〜〜〜〜
+
+
+
+
+
+
+Traffic Vector Tile API v2
+    HERE Traffic Vector Tile API は、リアルタイムの交通流および交通インシデント情報を提供します。
+    これは HERE Vector Tile サービスにおける交通レイヤーです。
+
+    https://www.here.com/docs/ja-JP/bundle/traffic-vector-tile-api-developer-guide/page/topics/flow-and-incident.html
+
+    本サービスは [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) をサポートしています。
+  termsOfService: https://developer.here.com/terms-conditions
+  license:
+    name: HERE ドキュメントライセンス
+    url: https://legal.here.com/en-gb/terms/documentation-license
+  url: https://www.here.com/docs/category/traffic-vector-tile-api
+- url: https://traffic.vector.hereapi.com/v2
