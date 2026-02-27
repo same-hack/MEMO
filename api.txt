@@ -1,1 +1,9 @@
 https://[domain]/map/ca_area?positions=139.7701767,35.6776208,139.7741167,35.6884528,139.7670194,35.6966194&datum=JGDs
+
+
+
+
+
+
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
