@@ -7,3 +7,22 @@ https://[domain]/map/ca_area?positions=139.7701767,35.6776208,139.7741167,35.688
 
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+npm i @angular/material @angular/cdk @angular/animations
+
+
+import { provideAnimations } from '@angular/platform-browser/animations';
+
+bootstrapApplication(App, {
+  providers: [provideAnimations()]
+});
+
+
+
+import { MatIconModule } from '@angular/material/icon';
+
+@Component({
+  standalone: true,
+  imports: [MatIconModule],
+  ...
+})
